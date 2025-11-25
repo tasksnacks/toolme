@@ -2,307 +2,188 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>ToolMe – Simple Money Calculators</title>
+  <title>Loan Calculator – ToolMe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta
-    name="description"
-    content="ToolMe – simple, friendly tools to help you understand loans, returns and investments."
-  />
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-  <!-- Simple header with logo -->
-  <header class="site-header">
-    <div class="site-header-inner center-header">
-      <div class="logo">ToolMe</div>
-    </div>
-  </header>
 
-  <main>
-    <!-- HOME SCREEN -->
-    <section class="hero">
-      <div class="hero-inner">
-        <h1>Simple tools for everyday money decisions.</h1>
-        <p class="hero-subtitle">
-          No jargon. Just clear calculators that tell you what you pay and what you get.
-        </p>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="index.html" class="logo">ToolMe</a>
+  </div>
+</header>
 
-        <!-- Tool cards grid -->
-        <div class="tool-grid">
-          <!-- Loan card (active) -->
-          <button class="tool-card tool-card--active" data-target="loan-section">
-            <div class="tool-tag">Loan</div>
-            <h2>Loan Calculator</h2>
-            <p>
-              Understand your payments and interest for any loan in a clear way.
-            </p>
-          </button>
+<main class="page">
 
-          <!-- ROI card (placeholder for later) -->
-          <div class="tool-card tool-card--disabled">
-            <div class="tool-tag">ROI</div>
-            <h2>ROI Calculator</h2>
-            <p>
-              Check how much profit you make from an investment or a small project.
-            </p>
-            <span class="coming-soon">Coming soon</span>
-          </div>
+  <section class="card">
+    <h2 class="section-title">Loan Calculator</h2>
+    <p id="loanTypeDescription" class="subtitle">
+      Amortized loan: pay back a fixed amount regularly until fully repaid.
+    </p>
 
-          <!-- Stock card (placeholder for later) -->
-          <div class="tool-card tool-card--disabled">
-            <div class="tool-tag">Stocks</div>
-            <h2>Stock Investment</h2>
-            <p>
-             Understand your payments and interest for any loan in a clear way.
-            </p>
-            <span class="coming-soon">Coming soon</span>
-          </div>
-        </div>
+    <div class="calculator">
+
+      <label id="amountLabel">
+        Loan Amount (€)
+        <input type="number" id="loanAmount" placeholder="e.g. 20000" />
+      </label>
+
+      <div class="grid-2">
+        <label>
+          Annual Interest Rate (%)
+          <input type="number" id="interestRate" placeholder="e.g. 6" />
+        </label>
+
+        <label>
+          Loan Type
+          <select id="loanType">
+            <option value="amortized" selected>Amortized loan</option>
+            <option value="deferred">Deferred payment loan</option>
+            <option value="bond">Bond</option>
+          </select>
+        </label>
       </div>
-    </section>
 
-    <!-- LOAN CALCULATOR SECTION -->
-    <section id="loan-section" class="page">
-      <section class="card">
-        <h2 class="section-title">Loan Calculator</h2>
-        <p id="loanTypeDescription" class="subtitle">
-          Amortized loan: pay back a fixed amount regularly until the loan is fully repaid.
+      <label>
+        Loan Term
+        <div class="term-fields">
+          <input type="number" id="loanYears" placeholder="10" />
+          <span class="term-unit">years</span>
+
+          <input type="number" id="loanMonths" placeholder="0" />
+          <span class="term-unit">months</span>
+        </div>
+      </label>
+
+      <div class="grid-2">
+        <label>
+          Compounding
+          <select id="compoundFrequency">
+            <option value="annually">Annually (APY)</option>
+            <option value="semiannually">Semi-annually</option>
+            <option value="quarterly">Quarterly</option>
+            <option value="monthly" selected>Monthly (APR)</option>
+            <option value="semimonthly">Semi-monthly</option>
+            <option value="biweekly">Bi-weekly</option>
+            <option value="weekly">Weekly</option>
+            <option value="daily">Daily</option>
+            <option value="continuously">Continuously</option>
+          </select>
+        </label>
+
+        <label id="paybackRow">
+          Pay Back
+          <select id="paymentFrequency">
+            <option value="every_day">Every day</option>
+            <option value="every_week">Every week</option>
+            <option value="every_2_weeks">Every 2 weeks</option>
+            <option value="every_half_month">Every half month</option>
+            <option value="every_month" selected>Every month</option>
+            <option value="every_quarter">Every quarter</option>
+            <option value="every_6_months">Every 6 months</option>
+            <option value="every_year">Every year</option>
+          </select>
+        </label>
+      </div>
+
+      <button id="calcBtn">Calculate</button>
+
+      <!-- Amortized Results -->
+      <div id="results-amortized" class="results" style="display:none;">
+        <p>Payment every <span id="paymentLabel"></span>: <strong id="periodicPayment"></strong></p>
+        <p>Total payments: <strong id="numPayments"></strong></p>
+        <p>Total paid: <strong id="totalPaid"></strong></p>
+        <p>Total interest: <strong id="totalInterest"></strong></p>
+      </div>
+
+      <!-- Deferred Results -->
+      <div id="results-deferred" class="results" style="display:none;">
+        <p>Amount due at maturity: <strong id="deferredAmountDue"></strong></p>
+        <p>Total interest: <strong id="deferredTotalInterest"></strong></p>
+      </div>
+
+      <!-- Bond Results -->
+      <div id="results-bond" class="results" style="display:none;">
+        <p>You receive today: <strong id="bondPresentValue"></strong></p>
+        <p>Total interest: <strong id="bondTotalInterest"></strong></p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Explanation Section -->
+  <section class="card card-info">
+    <h3 class="info-title">About each loan type</h3>
+
+    <div class="info-grid">
+      <div class="info-block">
+        <h4>Amortized loan</h4>
+        <p>
+          The most common type of loan. You make regular payments, and each one
+          reduces your balance a little. Includes home loans, car loans, and
+          many personal loans.
         </p>
+      </div>
 
-        <div class="calculator">
-          <label id="amountLabel">
-            Loan Amount (€)
-            <input type="number" id="loanAmount" placeholder="e.g. 20000" />
-          </label>
+      <div class="info-block">
+        <h4>Deferred payment loan</h4>
+        <p>
+          You don’t make payments during the loan. Everything is paid in one
+          lump sum at the end. Used in some short-term business or balloon loans.
+        </p>
+      </div>
 
-          <div class="grid-2">
-            <label>
-              Annual Interest Rate (%)
-              <input type="number" id="interestRate" placeholder="e.g. 6" />
-            </label>
+      <div class="info-block">
+        <h4>Bond</h4>
+        <p>
+          You receive money today and pay back a set amount later. The
+          calculator shows how much you get now and how much of the difference
+          is interest.
+        </p>
+      </div>
+    </div>
 
-            <label>
-              Loan Type
-              <select id="loanType">
-                <option value="amortized" selected>
-                  Amortized loan (fixed payments)
-                </option>
-                <option value="deferred">
-                  Deferred payment (lump sum at the end)
-                </option>
-                <option value="bond">
-                  Bond (amount due at maturity)
-                </option>
-              </select>
-            </label>
-          </div>
+    <h3 class="info-title basics-title">Loan basics</h3>
 
-          <label>
-            Loan Term
-            <div class="term-fields">
-              <input type="number" id="loanYears" placeholder="10" />
-              <span class="term-unit">years</span>
-              <input type="number" id="loanMonths" placeholder="0" />
-              <span class="term-unit">months</span>
-            </div>
-          </label>
+    <div class="info-grid basics-grid">
+      <div class="info-block small">
+        <h4>Interest rate</h4>
+        <p>
+          The cost of borrowing money. A higher rate means you pay more over time.
+        </p>
+      </div>
+      <div class="info-block small">
+        <h4>Compounding</h4>
+        <p>
+          How often interest is added to your balance. More frequent compounding =
+          more interest paid.
+        </p>
+      </div>
+      <div class="info-block small">
+        <h4>Loan term</h4>
+        <p>
+          The length of the loan. Longer terms = smaller payments but higher total interest.
+        </p>
+      </div>
+      <div class="info-block small">
+        <h4>Secured vs. unsecured</h4>
+        <p>
+          Secured loans use collateral (like a car). Unsecured loans have no collateral
+          and often higher interest rates.
+        </p>
+      </div>
+    </div>
 
-          <div class="grid-2">
-            <label>
-              Compounding
-              <select id="compoundFrequency">
-                <option value="annually">Annually (APY)</option>
-                <option value="semiannually">Semi-annually</option>
-                <option value="quarterly">Quarterly</option>
-                <option value="monthly" selected>Monthly (APR)</option>
-                <option value="semimonthly">Semi-monthly</option>
-                <option value="biweekly">Biweekly</option>
-                <option value="weekly">Weekly</option>
-                <option value="daily">Daily</option>
-                <option value="continuously">Continuously</option>
-              </select>
-            </label>
+  </section>
 
-            <label id="paybackRow">
-              Pay Back
-              <select id="paymentFrequency">
-                <option value="every_day">Every Day</option>
-                <option value="every_week">Every Week</option>
-                <option value="every_2_weeks">Every 2 Weeks</option>
-                <option value="every_half_month">Every Half Month</option>
-                <option value="every_month" selected>Every Month</option>
-                <option value="every_quarter">Every Quarter</option>
-                <option value="every_6_months">Every 6 Months</option>
-                <option value="every_year">Every Year</option>
-              </select>
-            </label>
-          </div>
+</main>
 
-          <button id="calcBtn">Calculate</button>
+<footer class="site-footer">
+  <small>ToolMe · simple, friendly financial tools</small>
+</footer>
 
-          <!-- Results for amortized loan -->
-          <div id="results-amortized" class="results" style="display:none;">
-            <p>
-              Payment every <span id="paymentLabel"></span>:
-              <strong id="periodicPayment"></strong>
-            </p>
-            <p>
-              Total number of payments:
-              <strong id="numPayments"></strong>
-            </p>
-            <p>
-              Total paid:
-              <strong id="totalPaid"></strong>
-            </p>
-            <p>
-              Total interest:
-              <strong id="totalInterest"></strong>
-            </p>
-          </div>
-
-          <!-- Results for deferred payment loan -->
-          <div id="results-deferred" class="results" style="display:none;">
-            <p>
-              Amount due at loan maturity:
-              <strong id="deferredAmountDue"></strong>
-            </p>
-            <p>
-              Total interest:
-              <strong id="deferredTotalInterest"></strong>
-            </p>
-          </div>
-
-          <!-- Results for bond -->
-          <div id="results-bond" class="results" style="display:none;">
-            <p>
-              Amount you receive today:
-              <strong id="bondPresentValue"></strong>
-            </p>
-            <p>
-              Total interest:
-              <strong id="bondTotalInterest"></strong>
-            </p>
-          </div>
-        </div>
-                <!-- END OF CALCULATOR CARD ABOVE -->
-
-      </section>
-
-      <!-- EXPLANATION SECTION -->
-      <section class="card card-info">
-        <h3 class="info-title">Understand the three loan types</h3>
-
-        <div class="info-grid">
-          <div class="info-block">
-            <h4>Amortized loan – fixed payments</h4>
-            <p>
-              This is the “normal” loan most people know. You make a regular
-              payment each month (or week, etc.). Every payment includes some
-              interest and some repayment of the amount you borrowed. Over time,
-              the loan slowly shrinks until it is fully paid off.
-            </p>
-            <p class="info-list-title">Common examples:</p>
-            <ul>
-              <li>Home loans (mortgages)</li>
-              <li>Car loans</li>
-              <li>Personal loans with monthly payments</li>
-            </ul>
-            <p>
-              In the calculator, choose <strong>“Amortized loan”</strong> if you
-              want to see how big your regular payment is and how much total
-              interest you will pay.
-            </p>
-          </div>
-
-          <div class="info-block">
-            <h4>Deferred payment loan – one big payment at the end</h4>
-            <p>
-              With this type of loan you don’t make regular payments. Instead,
-              interest builds up over the life of the loan and you pay
-              <strong>everything in one lump sum</strong> at the end.
-            </p>
-            <p class="info-list-title">You might see this in:</p>
-            <ul>
-              <li>Some short-term business loans</li>
-              <li>“Balloon” loans where most of the amount is due at the end</li>
-            </ul>
-            <p>
-              In the calculator, choose
-              <strong>“Deferred payment loan”</strong> to see how large that
-              final payment will be and how much interest builds up.
-            </p>
-          </div>
-
-          <div class="info-block">
-            <h4>Bond – amount you get today vs. amount you pay back later</h4>
-            <p>
-              A bond is a type of loan usually used by governments or companies.
-              You agree to pay back a fixed amount in the future, and in return
-              you receive some money today (usually a smaller amount).
-            </p>
-            <p class="info-list-title">This calculator helps you:</p>
-            <ul>
-              <li>Work out how much you receive today for a future payoff</li>
-              <li>See how much of the difference is effectively interest</li>
-            </ul>
-            <p>
-              In the calculator, choose <strong>“Bond”</strong> and enter the
-              amount that must be paid back at maturity as the
-              <strong>Predetermined Due Amount</strong>.
-            </p>
-          </div>
-        </div>
-
-        <h3 class="info-title basics-title">Loan basics in plain language</h3>
-
-        <div class="info-grid basics-grid">
-          <div class="info-block small">
-            <h4>Interest rate</h4>
-            <p>
-              The interest rate is the “price” of borrowing money. A higher
-              rate means you pay more over time. Even small differences in the
-              rate can add up to a lot of money on long loans.
-            </p>
-          </div>
-
-          <div class="info-block small">
-            <h4>Compounding</h4>
-            <p>
-              Compounding means interest is added to your balance, and then
-              new interest is charged on that higher amount. The more often it
-              compounds (daily vs. yearly), the more you will pay in total.
-            </p>
-          </div>
-
-          <div class="info-block small">
-            <h4>Loan term</h4>
-            <p>
-              The term is how long the loan lasts. A longer term usually means
-              smaller regular payments, but more interest paid overall. A
-              shorter term means higher payments but less total interest.
-            </p>
-          </div>
-
-          <div class="info-block small">
-            <h4>Secured vs. unsecured</h4>
-            <p>
-              A secured loan is backed by something you own, like a house or a
-              car. If you don’t pay, the lender can take that asset. Unsecured
-              loans (like many personal loans or credit cards) have no
-              collateral, so they often come with higher interest rates.
-            </p>
-          </div>
-        </div>
-      </section>
-    </section>
-      </section>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <small>ToolMe · simple, friendly financial tools</small>
-  </footer>
-
-  <script src="script.js"></script>
+<script src="script-loan.js"></script>
 </body>
 </html>
