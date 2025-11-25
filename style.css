@@ -526,10 +526,55 @@ button:active {
   font-size: 1rem;
 }
 
-/* Case Converter – Sleek Buttons */
+/* Case Converter – Two Column Buttons */
 
+.case-buttons {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  justify-items: center;
+}
 
-/* Slight tweak: make date inputs full-width on mobile */
+.case-btn {
+  all: unset; /* remove global button styling completely */
+  display: block;
+  text-align: center;
+  padding: 10px 16px;
+
+  /* Size */
+  min-width: 160px;
+  max-width: 220px;
+
+  /* Soft rounded corners */
+  border-radius: 12px;
+
+  /* Soft blue background (no dark blue) */
+  background: #eaf2fb; /* light pastel blue */
+
+  border: 1px solid rgba(72, 99, 176, 0.20);
+  color: #4863b0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  /* Soft shadow */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: all 0.15s ease;
+}
+
+.case-btn:hover {
+  background: #dbe8fa;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.10);
+}
+
+.case-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+}
+
+/* make date inputs full-width on mobile */
 
 @media (max-width: 640px) {
   .count-from-row {
