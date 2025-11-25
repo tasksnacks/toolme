@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Day Counter – Count Days Between Dates | ToolMe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Free day counter to count days between two dates or add days to a date. See total days, weekdays, and weekend days quickly with ToolMe."
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="site-header-inner center-header">
+      <a href="index.html" class="logo-link">
+        <div class="logo">ToolMe</div>
+      </a>
+    </div>
+  </header>
+
+  <main class="page">
+    <!-- Breadcrumbs for SEO + UX -->
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span>›</span>
+      <span>Other tools</span>
+      <span>›</span>
+      <span class="current">Day Counter</span>
+    </nav>
+
+    <!-- Card 1: Day counter between dates -->
+    <section class="card">
+      <h1 class="section-title">Day Counter</h1>
+      <p class="subtitle">
+        Count how many days are between two dates and see how many of them are weekdays and weekend days.
+      </p>
+
+      <div class="calculator">
+        <div class="grid-2">
+          <label>
+            Start date
+            <input type="date" id="dcStartDate" />
+          </label>
+          <label>
+            End date
+            <input type="date" id="dcEndDate" />
+          </label>
+        </div>
+
+        <label class="checkbox-row">
+          <input type="checkbox" id="dcIncludeEnd" />
+          <span>Include end day in the count</span>
+        </label>
+
+        <button id="dcCalculateBtn">Calculate days</button>
+
+        <div id="dcResults" class="results" style="display:none;">
+          <p>Total days: <strong id="dcTotalDays"></strong></p>
+          <p>Weekdays (Mon–Fri): <strong id="dcWeekdays"></strong></p>
+          <p>Weekend days (Sat–Sun): <strong id="dcWeekendDays"></strong></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Card 2: Count days from a date -->
+    <section class="card">
+      <h2 class="section-title">Count days from a date</h2>
+      <p class="subtitle">
+        Pick a start date and see what date it will be after adding or subtracting a number of days.
+      </p>
+
+      <div class="calculator">
+        <label>
+          Start date
+          <input type="date" id="cfStartDate" />
+        </label>
+
+        <div class="count-from-row">
+          <select id="cfDirection">
+            <option value="+">+</option>
+            <option value="-">−</option>
+          </select>
+          <input type="number" id="cfDays" placeholder="15" />
+          <span class="term-unit">days</span>
+        </div>
+
+        <label class="checkbox-row">
+          <input type="checkbox" id="cfBusinessOnly" />
+          <span>Count business days only (skip weekends)</span>
+        </label>
+
+        <button id="cfCalculateBtn">Calculate date</button>
+
+        <div id="cfResults" class="results" style="display:none;">
+          <p>Resulting date: <strong id="cfResultDate"></strong></p>
+          <p>Day of the week: <strong id="cfResultDay"></strong></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Explanation / SEO text -->
+    <section class="card card-info">
+      <h3 class="info-title">How to use the day counter</h3>
+
+      <div class="info-grid">
+        <div class="info-block">
+          <h4>Days between two dates</h4>
+          <p>
+            Choose a start date and an end date, then press <strong>“Calculate days”</strong>.
+            We count how many full days are in between and split them into weekdays
+            (Monday to Friday) and weekend days (Saturday and Sunday).
+          </p>
+          <p>
+            Turn on <strong>“Include end day”</strong> if you want the last date to be counted as well.
+            For example, for a project due on a certain day, you may want to include that day.
+          </p>
+        </div>
+
+        <div class="info-block">
+          <h4>Count days from a date</h4>
+          <p>
+            Pick a starting date and choose how many days to add or subtract. The calculator
+            will show you what date you land on and which day of the week it is.
+          </p>
+          <p>
+            If you only care about working days, tick
+            <strong>“Count business days only”</strong>. In that case we skip Saturdays and Sundays.
+          </p>
+        </div>
+
+        <div class="info-block">
+          <h4>Typical uses</h4>
+          <p>
+            People use this kind of day counter to:
+          </p>
+          <ul>
+            <li>Plan deadlines and project schedules</li>
+            <li>Count down to events, trips, or birthdays</li>
+            <li>Estimate pregnancy weeks or recovery periods</li>
+            <li>Check how many work days are left before a due date</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="info-title basics-title">Business days and holidays</h3>
+      <div class="info-grid basics-grid">
+        <div class="info-block small">
+          <h4>Business days</h4>
+          <p>
+            In this calculator, business days are Monday to Friday. Weekends (Saturday and Sunday)
+            are always counted separately and can be skipped in the “business days only” mode.
+          </p>
+        </div>
+
+        <div class="info-block small">
+          <h4>Holidays</h4>
+          <p>
+            Different countries and companies follow different holidays. To keep things simple,
+            this version of the calculator does not include public holidays yet. In the future,
+            we plan to let you mark specific dates as holidays and exclude them from business days.
+          </p>
+        </div>
+
+        <div class="info-block small">
+          <h4>Start and end days</h4>
+          <p>
+            The start date is always counted as a full day. The end date is only counted when
+            you check the <strong>“Include end day”</strong> box.
+          </p>
+        </div>
+
+        <div class="info-block small">
+          <h4>Day of the week</h4>
+          <p>
+            For any result date, we also show the day of the week so you can quickly see whether
+            it falls on a weekday or weekend.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <small>ToolMe · simple, friendly financial and date tools</small>
+  </footer>
+
+  <script src="script-daycounter.js"></script>
+</body>
+</html>
