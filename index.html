@@ -2,38 +2,93 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Loan Payment Calculator</title>
+  <title>Toolme – Loan Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Minimal, easy-to-use loan calculator with custom compounding and payment frequency." />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>Loan Payment Calculator</h1>
-
-    <div class="calculator">
-      <label>
-        Loan Amount (€)
-        <input type="number" id="loanAmount" placeholder="e.g. 20000" />
-      </label>
-
-      <label>
-        Annual Interest Rate (%)
-        <input type="number" id="interestRate" placeholder="e.g. 5" />
-      </label>
-
-      <label>
-        Term (years)
-        <input type="number" id="loanYears" placeholder="e.g. 5" />
-      </label>
-
-      <button id="calcBtn">Calculate</button>
-
-      <div id="results" class="results" style="display:none;">
-        <p>Monthly Payment: <strong id="monthlyPayment"></strong></p>
-        <p>Total Paid: <strong id="totalPaid"></strong></p>
-        <p>Total Interest: <strong id="totalInterest"></strong></p>
-      </div>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="logo">toolme</div>
+      <nav class="nav">
+        <a href="#" class="nav-link active">Loan Calculator</a>
+        <span class="nav-link disabled">More tools soon</span>
+      </nav>
     </div>
-  </div>
+  </header>
+
+  <main class="page">
+    <section class="card">
+      <h1>Loan Payment Calculator</h1>
+      <p class="subtitle">
+        Choose your compounding and payment schedule to see the payment amount and total interest.
+      </p>
+
+      <div class="calculator">
+        <label>
+          Loan Amount (€)
+          <input type="number" id="loanAmount" placeholder="e.g. 20000" />
+        </label>
+
+        <div class="grid-2">
+          <label>
+            Annual Interest Rate (%)
+            <input type="number" id="interestRate" placeholder="e.g. 6" />
+          </label>
+
+          <label>
+            Term (years)
+            <input type="number" id="loanYears" placeholder="e.g. 10" />
+          </label>
+        </div>
+
+        <div class="grid-2">
+          <label>
+            Compounding
+            <select id="compoundFrequency">
+              <option value="annually">Annually (APY)</option>
+              <option value="semiannually">Semi-annually</option>
+              <option value="quarterly">Quarterly</option>
+              <option value="monthly" selected>Monthly (APR)</option>
+              <option value="semimonthly">Semi-monthly</option>
+              <option value="biweekly">Biweekly</option>
+              <option value="weekly">Weekly</option>
+              <option value="daily">Daily</option>
+              <option value="continuously">Continuously</option>
+            </select>
+          </label>
+
+          <label>
+            Payment Frequency
+            <select id="paymentFrequency">
+              <option value="every_day">Every Day</option>
+              <option value="every_week">Every Week</option>
+              <option value="every_2_weeks">Every 2 Weeks</option>
+              <option value="every_half_month">Every Half Month</option>
+              <option value="every_month" selected>Every Month</option>
+              <option value="every_quarter">Every Quarter</option>
+              <option value="every_6_months">Every 6 Months</option>
+              <option value="every_year">Every Year</option>
+            </select>
+          </label>
+        </div>
+
+        <button id="calcBtn">Calculate</button>
+
+        <div id="results" class="results" style="display:none;">
+          <p>Payment Every <span id="paymentLabel"></span>: <strong id="periodicPayment"></strong></p>
+          <p>Total Number of Payments: <strong id="numPayments"></strong></p>
+          <p>Total Paid: <strong id="totalPaid"></strong></p>
+          <p>Total Interest: <strong id="totalInterest"></strong></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <small>toolme · simple useful tools</small>
+  </footer>
 
   <script src="script.js"></script>
 </body>
