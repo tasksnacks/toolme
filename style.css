@@ -2,6 +2,7 @@
   --blue-dark: #4863b0;
   --blue: #5b98d6;
   --blue-soft: #ddeef9;
+  --blue-light: #8ab6e8;
   --green-soft: #cad890;
   --green: #9fc164;
   --brown: #9c7165;
@@ -533,14 +534,17 @@ button:active {
 }
 
 .case-btn {
-  padding: 8px 12px;
-  border-radius: 8px;
-  background: var(--blue-light);
+  padding: 10px 14px;
+  width: 100%;
+  border-radius: 16px;
+  background: var(--blue-light);   
   color: #fff;
   border: none;
   cursor: pointer;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
+  font-weight: 600;
 }
+
 
 .case-btn:hover {
   opacity: 0.88;
