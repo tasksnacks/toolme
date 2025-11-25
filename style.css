@@ -23,7 +23,8 @@
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
   background: var(--bg);
   color: var(--text-main);
 }
@@ -86,10 +87,6 @@ body {
   cursor: default;
 }
 
-.nav-link-disabled:hover {
-  background: #f4f7fb;
-}
-
 .nav-link-muted {
   color: var(--text-muted);
 }
@@ -143,7 +140,8 @@ h1 {
   font-size: 0.95rem;
   outline: none;
   background: #f9fafb;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease,
+    background 0.15s ease;
 }
 
 .calculator input:focus,
@@ -157,6 +155,24 @@ h1 {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
+}
+
+/* Term fields */
+
+.term-fields {
+  display: grid;
+  grid-template-columns: 1.2fr auto 1.2fr auto;
+  gap: 6px;
+  align-items: center;
+}
+
+.term-fields input {
+  margin-top: 0;
+}
+
+.term-unit {
+  font-size: 0.8rem;
+  color: var(--text-muted);
 }
 
 /* Button */
@@ -225,5 +241,9 @@ button:active {
 
   .grid-2 {
     grid-template-columns: 1fr;
+  }
+
+  .term-fields {
+    grid-template-columns: 1.2fr auto 1.2fr auto;
   }
 }
