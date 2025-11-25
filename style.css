@@ -528,58 +528,7 @@ button:active {
 
 /* Case Converter – Sleek Buttons */
 
-.case-buttons {
-  margin-top: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;   /* smaller gap */
-}
 
-.case-btn {
-  all: unset;
-  width: 100%;
-  box-sizing: border-box;
-
-  /* Smaller height */
-  padding: 8px 12px;
-
-  /* Slightly rounded, not too pill-like */
-  border-radius: 10px;
-
-  /* Soft, subtle background */
-  background: #eaf2fb; /* light blue */
-
-  /* Soft border */
-  border: 1px solid rgba(72, 99, 176, 0.25);
-
-  /* Text */
-  color: #4863b0;
-  font-size: 0.88rem;
-  font-weight: 600;
-  text-align: center;
-  cursor: pointer;
-
-  /* Soft shadow */
-  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.06);
-
-  /* Smooth hover/press animations */
-  transition: 
-    background 0.15s ease,
-    transform 0.15s ease,
-    box-shadow 0.15s ease;
-}
-
-.case-btn:hover {
-  background: #d8e6f8;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.1);
-}
-
-.case-btn:active {
-  background: #c6d8f0;
-  transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.1);
-}
 /* Slight tweak: make date inputs full-width on mobile */
 
 @media (max-width: 640px) {
