@@ -13,17 +13,17 @@ const compoundConfig = {
 };
 
 const paymentConfig = {
-  every_day: { periodsPerYear: 365, label: "Day" },
-  every_week: { periodsPerYear: 52, label: "Week" },
-  every_2_weeks: { periodsPerYear: 26, label: "2 Weeks" },
-  every_half_month: { periodsPerYear: 24, label: "Half Month" },
-  every_month: { periodsPerYear: 12, label: "Month" },
-  every_quarter: { periodsPerYear: 4, label: "Quarter" },
-  every_6_months: { periodsPerYear: 2, label: "6 Months" },
-  every_year: { periodsPerYear: 1, label: "Year" }
+  every_day: { periodsPerYear: 365, label: "day" },
+  every_week: { periodsPerYear: 52, label: "week" },
+  every_2_weeks: { periodsPerYear: 26, label: "2 weeks" },
+  every_half_month: { periodsPerYear: 24, label: "half month" },
+  every_month: { periodsPerYear: 12, label: "month" },
+  every_quarter: { periodsPerYear: 4, label: "quarter" },
+  every_6_months: { periodsPerYear: 2, label: "6 months" },
+  every_year: { periodsPerYear: 1, label: "year" }
 };
 
-// Helper to get rate per payment period for amortized loans
+// Rate per payment period for amortized case
 function getPeriodicRate(annualRateDecimal, compoundKey, paymentsPerYear) {
   const compound = compoundConfig[compoundKey];
 
@@ -37,7 +37,7 @@ function getPeriodicRate(annualRateDecimal, compoundKey, paymentsPerYear) {
   return Math.pow(1 + annualRateDecimal / m, m / paymentsPerYear) - 1;
 }
 
-// Helper to get growth factor over 'years' for deferred/bond cases
+// Growth factor over given years (for deferred / bond)
 function growthFactor(annualRateDecimal, compoundKey, years) {
   const compound = compoundConfig[compoundKey];
 
@@ -72,12 +72,12 @@ function onLoanTypeChange() {
     paybackRow.style.display = "block";
   } else if (type === "deferred") {
     description.textContent =
-      "Deferred payment loan: interest accumulates and you pay a single lump sum at loan maturity.";
+      "Deferred payment loan: interest builds up and you pay everything in one lump sum at the end.";
     amountLabel.firstChild.textContent = "Loan Amount (€)";
     paybackRow.style.display = "none";
   } else if (type === "bond") {
     description.textContent =
-      "Bond: compute the initial amount you receive today for a predetermined amount due at maturity.";
+      "Bond: find how much money you receive today for a fixed amount you must pay back at maturity.";
     amountLabel.firstChild.textContent = "Predetermined Due Amount (€)";
     paybackRow.style.display = "none";
   }
@@ -102,7 +102,7 @@ function calculateLoan() {
     totalYears <= 0
   ) {
     alert(
-      "Please enter valid positive values for amount, interest rate, and loan term."
+      "Please enter positive numbers for the amount, interest rate and loan term."
     );
     return;
   }
@@ -146,7 +146,6 @@ function calculateLoan() {
 
     document.getElementById("results-amortized").style.display = "block";
   } else if (loanType === "deferred") {
-    // Simple lump-sum at maturity
     if (rAnnualDecimal === 0) {
       document.getElementById("deferredAmountDue").textContent =
         amount.toFixed(2) + " €";
@@ -165,7 +164,6 @@ function calculateLoan() {
 
     document.getElementById("results-deferred").style.display = "block";
   } else if (loanType === "bond") {
-    // Predetermined due amount => compute present value
     if (rAnnualDecimal === 0) {
       document.getElementById("bondPresentValue").textContent =
         amount.toFixed(2) + " €";
@@ -186,9 +184,26 @@ function calculateLoan() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+  // Loan type change behavior
   document
     .getElementById("loanType")
     .addEventListener("change", onLoanTypeChange);
+  onLoanTypeChange();
+
+  // Calculate button
   document.getElementById("calcBtn").addEventListener("click", calculateLoan);
-  onLoanTypeChange(); // set initial description
+
+  // Home screen: clicking the Loan card scrolls to loan section
+  const toolCards = document.querySelectorAll(".tool-card--active");
+  toolCards.forEach((card) => {
+    const targetId = card.getAttribute("data-target");
+    if (!targetId) return;
+
+    card.addEventListener("click", () => {
+      const section = document.getElementById(targetId);
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  });
 });
