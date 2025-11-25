@@ -2,156 +2,194 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>toolme – Loan Calculator</title>
+  <title>ToolMe – Simple Money Calculators</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Toolme – friendly loan calculator for amortized loans, deferred payment loans, and bonds."
+    content="ToolMe – simple, friendly tools to help you understand loans, returns and investments."
   />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Top navigation -->
+  <!-- Simple header with logo -->
   <header class="site-header">
-    <div class="site-header-inner">
-      <div class="logo">toolme</div>
-      <nav class="nav">
-        <a href="#" class="nav-link nav-link-active">Loan Calculator</a>
-        <span class="nav-link nav-link-disabled">ROI Calculator</span>
-        <span class="nav-link nav-link-disabled">Stock Investment</span>
-        <span class="nav-link nav-link-muted">More tools soon</span>
-      </nav>
+    <div class="site-header-inner center-header">
+      <div class="logo">ToolMe</div>
     </div>
   </header>
 
-  <!-- Page content -->
-  <main class="page">
-    <section class="card">
-      <h1>Loan Calculator</h1>
-      <p id="loanTypeDescription" class="subtitle">
-        Amortized loan: pay back a fixed amount regularly until the loan is fully repaid.
-      </p>
+  <main>
+    <!-- HOME SCREEN -->
+    <section class="hero">
+      <div class="hero-inner">
+        <h1>Simple tools for everyday money decisions.</h1>
+        <p class="hero-subtitle">
+          No jargon. Just clear calculators that tell you what you pay and what you get.
+        </p>
 
-      <div class="calculator">
-        <label id="amountLabel">
-          Loan Amount (€)
-          <input type="number" id="loanAmount" placeholder="e.g. 20000" />
-        </label>
+        <!-- Tool cards grid -->
+        <div class="tool-grid">
+          <!-- Loan card (active) -->
+          <button class="tool-card tool-card--active" data-target="loan-section">
+            <div class="tool-tag">Loan</div>
+            <h2>Loan Calculator</h2>
+            <p>
+              See how much you pay over time for a loan and how much of it is interest.
+            </p>
+          </button>
 
-        <div class="grid-2">
-          <label>
-            Annual Interest Rate (%)
-            <input type="number" id="interestRate" placeholder="e.g. 6" />
-          </label>
-
-          <label>
-            Loan Type
-            <select id="loanType">
-              <option value="amortized" selected>
-                Amortized loan (fixed payments)
-              </option>
-              <option value="deferred">
-                Deferred payment loan (lump sum at maturity)
-              </option>
-              <option value="bond">
-                Bond (predetermined amount at maturity)
-              </option>
-            </select>
-          </label>
-        </div>
-
-        <label>
-          Loan Term
-          <div class="term-fields">
-            <input type="number" id="loanYears" placeholder="10" />
-            <span class="term-unit">years</span>
-            <input type="number" id="loanMonths" placeholder="0" />
-            <span class="term-unit">months</span>
+          <!-- ROI card (placeholder for later) -->
+          <div class="tool-card tool-card--disabled">
+            <div class="tool-tag">ROI</div>
+            <h2>ROI Calculator</h2>
+            <p>
+              Check how much profit you make from an investment or a small project.
+            </p>
+            <span class="coming-soon">Coming soon</span>
           </div>
-        </label>
 
-        <div class="grid-2">
-          <label>
-            Compounding
-            <select id="compoundFrequency">
-              <option value="annually">Annually (APY)</option>
-              <option value="semiannually">Semi-annually</option>
-              <option value="quarterly">Quarterly</option>
-              <option value="monthly" selected>Monthly (APR)</option>
-              <option value="semimonthly">Semi-monthly</option>
-              <option value="biweekly">Biweekly</option>
-              <option value="weekly">Weekly</option>
-              <option value="daily">Daily</option>
-              <option value="continuously">Continuously</option>
-            </select>
-          </label>
-
-          <label id="paybackRow">
-            Pay Back
-            <select id="paymentFrequency">
-              <option value="every_day">Every Day</option>
-              <option value="every_week">Every Week</option>
-              <option value="every_2_weeks">Every 2 Weeks</option>
-              <option value="every_half_month">Every Half Month</option>
-              <option value="every_month" selected>Every Month</option>
-              <option value="every_quarter">Every Quarter</option>
-              <option value="every_6_months">Every 6 Months</option>
-              <option value="every_year">Every Year</option>
-            </select>
-          </label>
-        </div>
-
-        <button id="calcBtn">Calculate</button>
-
-        <!-- Results for amortized loan -->
-        <div id="results-amortized" class="results" style="display:none;">
-          <p>
-            Payment Every <span id="paymentLabel"></span>:
-            <strong id="periodicPayment"></strong>
-          </p>
-          <p>
-            Total Number of Payments:
-            <strong id="numPayments"></strong>
-          </p>
-          <p>
-            Total Paid:
-            <strong id="totalPaid"></strong>
-          </p>
-          <p>
-            Total Interest:
-            <strong id="totalInterest"></strong>
-          </p>
-        </div>
-
-        <!-- Results for deferred payment loan -->
-        <div id="results-deferred" class="results" style="display:none;">
-          <p>
-            Amount Due at Loan Maturity:
-            <strong id="deferredAmountDue"></strong>
-          </p>
-          <p>
-            Total Interest:
-            <strong id="deferredTotalInterest"></strong>
-          </p>
-        </div>
-
-        <!-- Results for bond -->
-        <div id="results-bond" class="results" style="display:none;">
-          <p>
-            Amount Received When the Loan Starts:
-            <strong id="bondPresentValue"></strong>
-          </p>
-          <p>
-            Total Interest:
-            <strong id="bondTotalInterest"></strong>
-          </p>
+          <!-- Stock card (placeholder for later) -->
+          <div class="tool-card tool-card--disabled">
+            <div class="tool-tag">Stocks</div>
+            <h2>Stock Investment</h2>
+            <p>
+              Estimate how your stock investment can grow over time with compounding.
+            </p>
+            <span class="coming-soon">Coming soon</span>
+          </div>
         </div>
       </div>
+    </section>
+
+    <!-- LOAN CALCULATOR SECTION -->
+    <section id="loan-section" class="page">
+      <section class="card">
+        <h2 class="section-title">Loan Calculator</h2>
+        <p id="loanTypeDescription" class="subtitle">
+          Amortized loan: pay back a fixed amount regularly until the loan is fully repaid.
+        </p>
+
+        <div class="calculator">
+          <label id="amountLabel">
+            Loan Amount (€)
+            <input type="number" id="loanAmount" placeholder="e.g. 20000" />
+          </label>
+
+          <div class="grid-2">
+            <label>
+              Annual Interest Rate (%)
+              <input type="number" id="interestRate" placeholder="e.g. 6" />
+            </label>
+
+            <label>
+              Loan Type
+              <select id="loanType">
+                <option value="amortized" selected>
+                  Amortized loan (fixed payments)
+                </option>
+                <option value="deferred">
+                  Deferred payment (lump sum at the end)
+                </option>
+                <option value="bond">
+                  Bond (amount due at maturity)
+                </option>
+              </select>
+            </label>
+          </div>
+
+          <label>
+            Loan Term
+            <div class="term-fields">
+              <input type="number" id="loanYears" placeholder="10" />
+              <span class="term-unit">years</span>
+              <input type="number" id="loanMonths" placeholder="0" />
+              <span class="term-unit">months</span>
+            </div>
+          </label>
+
+          <div class="grid-2">
+            <label>
+              Compounding
+              <select id="compoundFrequency">
+                <option value="annually">Annually (APY)</option>
+                <option value="semiannually">Semi-annually</option>
+                <option value="quarterly">Quarterly</option>
+                <option value="monthly" selected>Monthly (APR)</option>
+                <option value="semimonthly">Semi-monthly</option>
+                <option value="biweekly">Biweekly</option>
+                <option value="weekly">Weekly</option>
+                <option value="daily">Daily</option>
+                <option value="continuously">Continuously</option>
+              </select>
+            </label>
+
+            <label id="paybackRow">
+              Pay Back
+              <select id="paymentFrequency">
+                <option value="every_day">Every Day</option>
+                <option value="every_week">Every Week</option>
+                <option value="every_2_weeks">Every 2 Weeks</option>
+                <option value="every_half_month">Every Half Month</option>
+                <option value="every_month" selected>Every Month</option>
+                <option value="every_quarter">Every Quarter</option>
+                <option value="every_6_months">Every 6 Months</option>
+                <option value="every_year">Every Year</option>
+              </select>
+            </label>
+          </div>
+
+          <button id="calcBtn">Calculate</button>
+
+          <!-- Results for amortized loan -->
+          <div id="results-amortized" class="results" style="display:none;">
+            <p>
+              Payment every <span id="paymentLabel"></span>:
+              <strong id="periodicPayment"></strong>
+            </p>
+            <p>
+              Total number of payments:
+              <strong id="numPayments"></strong>
+            </p>
+            <p>
+              Total paid:
+              <strong id="totalPaid"></strong>
+            </p>
+            <p>
+              Total interest:
+              <strong id="totalInterest"></strong>
+            </p>
+          </div>
+
+          <!-- Results for deferred payment loan -->
+          <div id="results-deferred" class="results" style="display:none;">
+            <p>
+              Amount due at loan maturity:
+              <strong id="deferredAmountDue"></strong>
+            </p>
+            <p>
+              Total interest:
+              <strong id="deferredTotalInterest"></strong>
+            </p>
+          </div>
+
+          <!-- Results for bond -->
+          <div id="results-bond" class="results" style="display:none;">
+            <p>
+              Amount you receive today:
+              <strong id="bondPresentValue"></strong>
+            </p>
+            <p>
+              Total interest:
+              <strong id="bondTotalInterest"></strong>
+            </p>
+          </div>
+        </div>
+      </section>
     </section>
   </main>
 
   <footer class="site-footer">
-    <small>toolme · simple, friendly financial tools</small>
+    <small>ToolMe · simple, friendly financial tools</small>
   </footer>
 
   <script src="script.js"></script>
