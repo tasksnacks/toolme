@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Investment Calculator – Grow Your Money Over Time | ToolMe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Simple investment calculator to estimate how your savings can grow over time with a fixed return and regular contributions. See end balance, total contributions, and interest."
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="site-header-inner center-header">
+      <a href="index.html" class="logo-link">
+        <div class="logo">ToolMe</div>
+      </a>
+    </div>
+  </header>
+
+  <main class="page">
+    <!-- MAIN INVESTMENT CALCULATOR -->
+    <section class="card">
+      <h1 class="section-title">Investment Calculator</h1>
+      <p class="subtitle">
+        Enter a starting amount, a yearly return, and any regular contributions to see how your money can grow.
+      </p>
+
+      <div class="calculator">
+        <label>
+          Starting amount
+          <input type="number" id="invStart" placeholder="e.g. 20000" />
+        </label>
+
+        <label>
+          Investment length
+          <div class="term-fields">
+            <input type="number" id="invYears" placeholder="10" />
+            <span class="term-unit">years</span>
+          </div>
+        </label>
+
+        <div class="grid-2">
+          <label>
+            Return rate (per year)
+            <input type="number" id="invRate" placeholder="e.g. 6" />
+          </label>
+
+          <label>
+            Compounding
+            <select id="invCompound">
+              <option value="annually">Annually</option>
+              <option value="monthly" selected>Monthly</option>
+            </select>
+          </label>
+        </div>
+
+        <h3 class="mini-title">Regular contributions (optional)</h3>
+
+        <div class="grid-2">
+          <label>
+            Contribution amount
+            <input type="number" id="invContribution" placeholder="e.g. 1000" />
+          </label>
+
+          <label>
+            Contribution frequency
+            <select id="invContributionFreq">
+              <option value="yearly">Every year</option>
+              <option value="monthly" selected>Every month</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="checkbox-row">
+          <input type="radio" name="invTiming" value="end" checked />
+          <span>Contribute at the end of each period</span>
+        </label>
+        <label class="checkbox-row">
+          <input type="radio" name="invTiming" value="beginning" />
+          <span>Contribute at the beginning of each period</span>
+        </label>
+
+        <button id="invCalcBtn">Calculate</button>
+
+        <div id="invResults" class="results" style="display:none;">
+          <p>End balance: <strong id="invEndBalance"></strong></p>
+          <p>Starting amount: <strong id="invStartOut"></strong></p>
+          <p>Total contributions: <strong id="invTotalContrib"></strong></p>
+          <p>Total interest: <strong id="invTotalInterest"></strong></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACCUMULATION SCHEDULE -->
+    <section class="card">
+      <h2 class="section-title">Accumulation schedule</h2>
+      <p class="subtitle">
+        This table shows how your balance could grow year by year, based on the information above.
+      </p>
+
+      <div class="schedule-wrapper">
+        <table class="schedule-table" id="invScheduleTable">
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>Deposit</th>
+              <th>Interest</th>
+              <th>Ending balance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- rows inserted by JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- EXPLANATION / SEO CONTENT -->
+    <section class="card card-info">
+      <h3 class="info-title">Investment basics in plain language</h3>
+
+      <div class="info-grid">
+        <div class="info-block">
+          <h4>What are we calculating?</h4>
+          <p>
+            Investing is using money today in order to have more money in the future.
+            This calculator helps you see what your final balance could be if you:
+          </p>
+          <ul>
+            <li>Start with a certain amount</li>
+            <li>Earn a steady yearly return</li>
+            <li>Add more money on a regular schedule</li>
+          </ul>
+        </div>
+
+        <div class="info-block">
+          <h4>Key pieces</h4>
+          <p>
+            <strong>Return rate</strong> is how much your investment grows each year in percent.
+            <strong>Starting amount</strong> is the savings you begin with.
+            <strong>Investment length</strong> is how many years you leave the money invested.
+            <strong>Additional contributions</strong> are extra amounts you add monthly or yearly.
+          </p>
+        </div>
+
+        <div class="info-block">
+          <h4>What can this represent?</h4>
+          <p>
+            You can use this for many simple, long-term plans:
+          </p>
+          <ul>
+            <li>Regular deposits into an index fund</li>
+            <li>Monthly savings for a house deposit</li>
+            <li>Building an emergency fund or retirement pot</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="info-title basics-title">Things to keep in mind</h3>
+
+      <div class="info-grid basics-grid">
+        <div class="info-block small">
+          <h4>Fixed return</h4>
+          <p>
+            We assume a constant return rate. Real investments like stocks or property
+            move up and down over time, so actual results will vary.
+          </p>
+        </div>
+
+        <div class="info-block small">
+          <h4>Compounding</h4>
+          <p>
+            Compounding means interest is earned on top of previous interest.
+            The more often it compounds (for example monthly instead of yearly),
+            the faster the balance can grow.
+          </p>
+        </div>
+
+        <div class="info-block small">
+          <h4>Risk</h4>
+          <p>
+            Higher potential returns usually mean higher risk. This tool does
+            not show risk – it only shows what could happen if the return rate
+            stayed steady.
+          </p>
+        </div>
+
+        <div class="info-block small">
+          <h4>Fees & taxes</h4>
+          <p>
+            Management fees and taxes can reduce real returns. You can roughly
+            include them by using a slightly lower return rate in the calculator.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <small>ToolMe · simple, friendly financial tools</small>
+  </footer>
+
+  <script src="script-investment.js"></script>
+</body>
+</html>
