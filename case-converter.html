@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Case Converter – Uppercase, Lowercase & More | ToolMe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Free online case converter: uppercase, lowercase, sentence case, title case, alternating case and more. Simple and fast.">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<header class="site-header">
+  <div class="site-header-inner center-header">
+    <a href="index.html" class="logo-link">
+      <div class="logo">ToolMe</div>
+    </a>
+  </div>
+</header>
+
+<main class="page">
+  <section class="card">
+    <h1 class="section-title">Case Converter</h1>
+    <p class="subtitle">Paste your text and convert it into any style you like.</p>
+
+    <div class="calculator">
+      <textarea id="textInput" class="textarea" placeholder="Type or paste your text here"></textarea>
+
+      <div class="case-buttons">
+        <button class="case-btn" data-case="sentence">Sentence case</button>
+        <button class="case-btn" data-case="lower">lower case</button>
+        <button class="case-btn" data-case="upper">UPPER CASE</button>
+        <button class="case-btn" data-case="capitalized">Capitalized Case</button>
+        <button class="case-btn" data-case="alternating">aLtErNaTiNg cAsE</button>
+        <button class="case-btn" data-case="title">Title Case</button>
+        <button class="case-btn" data-case="inverse">InVeRsE CaSe</button>
+      </div>
+
+      <div class="case-actions">
+        <button id="copyBtn">Copy</button>
+        <button id="clearBtn">Clear</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card card-info">
+    <h3 class="info-title">What this tool does</h3>
+    <p>
+      This case converter quickly transforms your text into different styles without retyping anything.
+      It helps when you accidentally typed in all caps, need a formatted title,
+      or want to make your text easier to read.
+    </p>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <small>ToolMe · simple text tools for everyone</small>
+</footer>
+
+<script src="script-case.js"></script>
+</body>
+</html>
