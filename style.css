@@ -164,6 +164,40 @@ body {
   border-radius: 999px;
 }
 
+/* ROI time mode toggle */
+
+.roi-time-toggle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  margin: 12px 0 8px;
+  color: var(--text-main);
+}
+
+.roi-time-toggle span {
+  font-weight: 500;
+}
+
+.roi-toggle-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.roi-toggle-option input {
+  margin: 0;
+}
+
+/* small hint text under date inputs */
+.small-hint {
+  margin: 6px 0 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
 /* Loan section layout */
 
 .page {
