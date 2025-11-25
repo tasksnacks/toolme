@@ -1,5 +1,4 @@
-// Compounding and payment configs
-
+// ---- configuration for compounding and payments ----
 const compoundConfig = {
   annually: { type: "discrete", periodsPerYear: 1 },
   semiannually: { type: "discrete", periodsPerYear: 2 },
@@ -23,10 +22,9 @@ const paymentConfig = {
   every_year: { periodsPerYear: 1, label: "year" }
 };
 
-// Rate per payment period for amortized case
+// per-payment-period interest rate
 function getPeriodicRate(annualRateDecimal, compoundKey, paymentsPerYear) {
   const compound = compoundConfig[compoundKey];
-
   if (!compound) return annualRateDecimal / paymentsPerYear;
 
   if (compound.type === "continuous") {
@@ -37,10 +35,9 @@ function getPeriodicRate(annualRateDecimal, compoundKey, paymentsPerYear) {
   return Math.pow(1 + annualRateDecimal / m, m / paymentsPerYear) - 1;
 }
 
-// Growth factor over given years (for deferred / bond)
+// growth factor over given years (for deferred/bond)
 function growthFactor(annualRateDecimal, compoundKey, years) {
   const compound = compoundConfig[compoundKey];
-
   if (!compound) return 1 + annualRateDecimal * years;
 
   if (compound.type === "continuous") {
@@ -108,7 +105,6 @@ function calculateLoan() {
   }
 
   const rAnnualDecimal = annualRate / 100;
-
   hideAllResults();
 
   if (loanType === "amortized") {
@@ -149,8 +145,7 @@ function calculateLoan() {
     if (rAnnualDecimal === 0) {
       document.getElementById("deferredAmountDue").textContent =
         amount.toFixed(2) + " €";
-      document.getElementById("deferredTotalInterest").textContent =
-        "0.00 €";
+      document.getElementById("deferredTotalInterest").textContent = "0.00 €";
     } else {
       const factor = growthFactor(rAnnualDecimal, compoundKey, totalYears);
       const amountDue = amount * factor;
@@ -183,27 +178,17 @@ function calculateLoan() {
   }
 }
 
+// attach events once DOM is ready
 document.addEventListener("DOMContentLoaded", function () {
-  // Loan type change behavior
-  document
-    .getElementById("loanType")
-    .addEventListener("change", onLoanTypeChange);
+  const typeSelect = document.getElementById("loanType");
+  if (typeSelect) {
+    typeSelect.addEventListener("change", onLoanTypeChange);
+  }
+
+  const calcBtn = document.getElementById("calcBtn");
+  if (calcBtn) {
+    calcBtn.addEventListener("click", calculateLoan);
+  }
+
   onLoanTypeChange();
-
-  // Calculate button
-  document.getElementById("calcBtn").addEventListener("click", calculateLoan);
-
-  // Home screen: clicking the Loan card scrolls to loan section
-  const toolCards = document.querySelectorAll(".tool-card--active");
-  toolCards.forEach((card) => {
-    const targetId = card.getAttribute("data-target");
-    if (!targetId) return;
-
-    card.addEventListener("click", () => {
-      const section = document.getElementById(targetId);
-      if (section) {
-        section.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    });
-  });
 });
