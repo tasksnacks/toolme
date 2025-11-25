@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ROI Calculator – ToolMe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- Header with centered ToolMe -->
+  <header class="site-header">
+    <div class="site-header-inner center-header">
+      <a href="index.html" class="logo-link">
+        <div class="logo">ToolMe</div>
+      </a>
+    </div>
+  </header>
+
+  <main class="page">
+    <!-- ROI Calculator Card -->
+    <section class="card">
+      <h2 class="section-title">Return on Investment (ROI)</h2>
+      <p class="subtitle">
+        See how much you got back compared to what you put in, and how that looks per year.
+      </p>
+
+      <div class="calculator">
+        <label>
+          Amount invested
+          <input type="number" id="amountInvested" placeholder="e.g. 5000" />
+        </label>
+
+        <label>
+          Amount returned
+          <input type="number" id="amountReturned" placeholder="e.g. 6500" />
+        </label>
+
+        <!-- Time input mode toggle -->
+        <div class="roi-time-toggle">
+          <span>Investment time:</span>
+          <label class="roi-toggle-option">
+            <input type="radio" name="timeMode" value="length" checked />
+            Length (years & months)
+          </label>
+          <label class="roi-toggle-option">
+            <input type="radio" name="timeMode" value="dates" />
+            Using dates
+          </label>
+        </div>
+
+        <!-- Length mode -->
+        <div id="timeLengthBlock">
+          <div class="term-fields">
+            <input type="number" id="timeYears" placeholder="2" />
+            <span class="term-unit">years</span>
+            <input type="number" id="timeMonths" placeholder="0" />
+            <span class="term-unit">months</span>
+          </div>
+        </div>
+
+        <!-- Dates mode -->
+        <div id="timeDatesBlock" style="display:none;">
+          <div class="grid-2">
+            <label>
+              Start date
+              <input type="date" id="startDate" />
+            </label>
+            <label>
+              End date
+              <input type="date" id="endDate" />
+            </label>
+          </div>
+          <p class="small-hint">
+            We use the dates to estimate how many years the investment lasted.
+          </p>
+        </div>
+
+        <button id="calcRoiBtn">Calculate ROI</button>
+
+        <div id="roiResults" class="results" style="display:none;">
+          <p>
+            ROI:
+            <strong id="roiPercent"></strong>
+          </p>
+          <p>
+            Total gain (amount returned − amount invested):
+            <strong id="roiGain"></strong>
+          </p>
+          <p>
+            Investment time:
+            <strong id="roiYearsText"></strong>
+          </p>
+          <p>
+            Annualized ROI:
+            <strong id="roiAnnual"></strong>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Explanation card -->
+    <section class="card card-info">
+      <h3 class="info-title">ROI in simple terms</h3>
+
+      <div class="info-grid">
+        <div class="info-block">
+          <h4>What is ROI?</h4>
+          <p>
+            ROI (Return on Investment) shows how much you earned compared to what you spent.
+            It answers the question: “For every €1 I put in, how much did I get back?”
+          </p>
+          <p>
+            For example, if you invest €1,000 and get back €1,200, your gain is €200 and
+            your ROI is 20%.
+          </p>
+        </div>
+
+        <div class="info-block">
+          <h4>Why does time matter?</h4>
+          <p>
+            Earning 20% in one year is very different from earning 20% over ten years.
+            That’s why we also show an <strong>annualized ROI</strong>, which spreads
+            the return over the time period to make comparisons fair.
+          </p>
+        </div>
+
+        <div class="info-block">
+          <h4>What can you use ROI for?</h4>
+          <p>
+            You can apply ROI to almost anything: savings, small projects, ads, or
+            buying and selling assets. It’s a quick way to compare which option
+            uses your money more effectively.
+          </p>
+        </div>
+      </div>
+
+      <h3 class="info-title basics-title">How this calculator works</h3>
+      <div class="info-grid basics-grid">
+        <div class="info-block small">
+          <h4>Amount invested</h4>
+          <p>
+            The total money you put into the investment, including any extra costs
+            you want to count (fees, taxes, etc.).
+          </p>
+        </div>
+
+        <div class="info-block small">
+          <h4>Amount returned</h4>
+          <p>
+            The total money you got back at the end, including any cash you took
+            out along the way if you want to include it.
+          </p>
+        </div>
+
+        <div class="info-block small">
+          <h4>Time length or dates</h4>
+          <p>
+            You can enter how long the investment lasted using years and months,
+            or give start and end dates and we will estimate the time for you.
+          </p>
+        </div>
+
+        <div class="info-block small">
+          <h4>Limits of ROI</h4>
+          <p>
+            ROI is a quick snapshot. It doesn’t show risk, cash flows in the
+            middle, or inflation. Use it as a simple comparison, not a full
+            financial plan.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <small>ToolMe · simple, friendly financial tools</small>
+  </footer>
+
+  <script src="script-roi.js"></script>
+</body>
+</html>
