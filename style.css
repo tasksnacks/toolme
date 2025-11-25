@@ -515,7 +515,51 @@ button:active {
 .count-from-row input[type="number"] {
   max-width: 120px;
 }
+.textarea {
+  width: 100%;
+  height: 180px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  resize: vertical;
+  font-size: 1rem;
+}
 
+.case-buttons {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.case-btn {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--blue-light);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.case-btn:hover {
+  opacity: 0.88;
+}
+
+.case-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+}
+
+.case-actions button {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  background: var(--green);
+  color: #fff;
+  cursor: pointer;
+}
 /* Slight tweak: make date inputs full-width on mobile */
 
 @media (max-width: 640px) {
