@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Loan Payment Calculator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Loan Payment Calculator</h1>
+
+    <div class="calculator">
+      <label>
+        Loan Amount (€)
+        <input type="number" id="loanAmount" placeholder="e.g. 20000" />
+      </label>
+
+      <label>
+        Annual Interest Rate (%)
+        <input type="number" id="interestRate" placeholder="e.g. 5" />
+      </label>
+
+      <label>
+        Term (years)
+        <input type="number" id="loanYears" placeholder="e.g. 5" />
+      </label>
+
+      <button id="calcBtn">Calculate</button>
+
+      <div id="results" class="results" style="display:none;">
+        <p>Monthly Payment: <strong id="monthlyPayment"></strong></p>
+        <p>Total Paid: <strong id="totalPaid"></strong></p>
+        <p>Total Interest: <strong id="totalInterest"></strong></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
