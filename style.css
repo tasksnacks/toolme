@@ -191,7 +191,49 @@ body {
 .roi-toggle-option input {
   margin: 0;
 }
+/* Small section title inside cards */
+.mini-title {
+  margin: 14px 0 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
 
+/* Schedule table */
+
+.schedule-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 10px;
+}
+
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.schedule-table th,
+.schedule-table td {
+  padding: 6px 8px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: right;
+}
+
+.schedule-table th:first-child,
+.schedule-table td:first-child {
+  text-align: left;
+}
+
+.schedule-table thead {
+  background: #f3f4f6;
+  position: sticky;
+  top: 0;
+}
+
+.schedule-table tr:nth-child(even) {
+  background: #f9fafb;
+}
 /* small hint text under date inputs */
 .small-hint {
   margin: 6px 0 0;
