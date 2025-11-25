@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Toolme – simple, friendly financial calculators: loan, ROI, stock investment and more."
+    content="Toolme – friendly loan calculator for amortized loans, deferred payment loans, and bonds."
   />
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -17,8 +17,8 @@
       <div class="logo">toolme</div>
       <nav class="nav">
         <a href="#" class="nav-link nav-link-active">Loan Calculator</a>
-        <a href="#" class="nav-link nav-link-disabled">ROI Calculator</a>
-        <a href="#" class="nav-link nav-link-disabled">Stock Investment</a>
+        <span class="nav-link nav-link-disabled">ROI Calculator</span>
+        <span class="nav-link nav-link-disabled">Stock Investment</span>
         <span class="nav-link nav-link-muted">More tools soon</span>
       </nav>
     </div>
@@ -27,13 +27,13 @@
   <!-- Page content -->
   <main class="page">
     <section class="card">
-      <h1>Loan Payment Calculator</h1>
-      <p class="subtitle">
-        Enter your loan details and choose how interest is compounded and how often you pay it back.
+      <h1>Loan Calculator</h1>
+      <p id="loanTypeDescription" class="subtitle">
+        Amortized loan: pay back a fixed amount regularly until the loan is fully repaid.
       </p>
 
       <div class="calculator">
-        <label>
+        <label id="amountLabel">
           Loan Amount (€)
           <input type="number" id="loanAmount" placeholder="e.g. 20000" />
         </label>
@@ -45,10 +45,30 @@
           </label>
 
           <label>
-            Term (years)
-            <input type="number" id="loanYears" placeholder="e.g. 10" />
+            Loan Type
+            <select id="loanType">
+              <option value="amortized" selected>
+                Amortized loan (fixed payments)
+              </option>
+              <option value="deferred">
+                Deferred payment loan (lump sum at maturity)
+              </option>
+              <option value="bond">
+                Bond (predetermined amount at maturity)
+              </option>
+            </select>
           </label>
         </div>
+
+        <label>
+          Loan Term
+          <div class="term-fields">
+            <input type="number" id="loanYears" placeholder="10" />
+            <span class="term-unit">years</span>
+            <input type="number" id="loanMonths" placeholder="0" />
+            <span class="term-unit">months</span>
+          </div>
+        </label>
 
         <div class="grid-2">
           <label>
@@ -66,8 +86,8 @@
             </select>
           </label>
 
-          <label>
-            Payment Frequency
+          <label id="paybackRow">
+            Pay Back
             <select id="paymentFrequency">
               <option value="every_day">Every Day</option>
               <option value="every_week">Every Week</option>
@@ -83,7 +103,8 @@
 
         <button id="calcBtn">Calculate</button>
 
-        <div id="results" class="results" style="display:none;">
+        <!-- Results for amortized loan -->
+        <div id="results-amortized" class="results" style="display:none;">
           <p>
             Payment Every <span id="paymentLabel"></span>:
             <strong id="periodicPayment"></strong>
@@ -99,6 +120,30 @@
           <p>
             Total Interest:
             <strong id="totalInterest"></strong>
+          </p>
+        </div>
+
+        <!-- Results for deferred payment loan -->
+        <div id="results-deferred" class="results" style="display:none;">
+          <p>
+            Amount Due at Loan Maturity:
+            <strong id="deferredAmountDue"></strong>
+          </p>
+          <p>
+            Total Interest:
+            <strong id="deferredTotalInterest"></strong>
+          </p>
+        </div>
+
+        <!-- Results for bond -->
+        <div id="results-bond" class="results" style="display:none;">
+          <p>
+            Amount Received When the Loan Starts:
+            <strong id="bondPresentValue"></strong>
+          </p>
+          <p>
+            Total Interest:
+            <strong id="bondTotalInterest"></strong>
           </p>
         </div>
       </div>
