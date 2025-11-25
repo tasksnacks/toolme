@@ -2,27 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Toolme – Loan Calculator</title>
+  <title>toolme – Loan Calculator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Minimal, easy-to-use loan calculator with custom compounding and payment frequency." />
+  <meta
+    name="description"
+    content="Toolme – simple, friendly financial calculators: loan, ROI, stock investment and more."
+  />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Top navigation -->
   <header class="site-header">
     <div class="site-header-inner">
       <div class="logo">toolme</div>
       <nav class="nav">
-        <a href="#" class="nav-link active">Loan Calculator</a>
-        <span class="nav-link disabled">More tools soon</span>
+        <a href="#" class="nav-link nav-link-active">Loan Calculator</a>
+        <a href="#" class="nav-link nav-link-disabled">ROI Calculator</a>
+        <a href="#" class="nav-link nav-link-disabled">Stock Investment</a>
+        <span class="nav-link nav-link-muted">More tools soon</span>
       </nav>
     </div>
   </header>
 
+  <!-- Page content -->
   <main class="page">
     <section class="card">
       <h1>Loan Payment Calculator</h1>
       <p class="subtitle">
-        Choose your compounding and payment schedule to see the payment amount and total interest.
+        Enter your loan details and choose how interest is compounded and how often you pay it back.
       </p>
 
       <div class="calculator">
@@ -77,17 +84,29 @@
         <button id="calcBtn">Calculate</button>
 
         <div id="results" class="results" style="display:none;">
-          <p>Payment Every <span id="paymentLabel"></span>: <strong id="periodicPayment"></strong></p>
-          <p>Total Number of Payments: <strong id="numPayments"></strong></p>
-          <p>Total Paid: <strong id="totalPaid"></strong></p>
-          <p>Total Interest: <strong id="totalInterest"></strong></p>
+          <p>
+            Payment Every <span id="paymentLabel"></span>:
+            <strong id="periodicPayment"></strong>
+          </p>
+          <p>
+            Total Number of Payments:
+            <strong id="numPayments"></strong>
+          </p>
+          <p>
+            Total Paid:
+            <strong id="totalPaid"></strong>
+          </p>
+          <p>
+            Total Interest:
+            <strong id="totalInterest"></strong>
+          </p>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <small>toolme · simple useful tools</small>
+    <small>toolme · simple, friendly financial tools</small>
   </footer>
 
   <script src="script.js"></script>
