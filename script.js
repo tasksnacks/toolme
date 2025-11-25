@@ -1,4 +1,4 @@
-// Map compounding and payment frequencies to numbers & labels
+// Compounding and payment configs
 
 const compoundConfig = {
   annually: { type: "discrete", periodsPerYear: 1 },
@@ -23,69 +23,172 @@ const paymentConfig = {
   every_year: { periodsPerYear: 1, label: "Year" }
 };
 
+// Helper to get rate per payment period for amortized loans
 function getPeriodicRate(annualRateDecimal, compoundKey, paymentsPerYear) {
   const compound = compoundConfig[compoundKey];
 
   if (!compound) return annualRateDecimal / paymentsPerYear;
 
   if (compound.type === "continuous") {
-    // continuous compounding: effective rate over 1/payment year
     return Math.exp(annualRateDecimal / paymentsPerYear) - 1;
   }
 
   const m = compound.periodsPerYear;
-  // Convert nominal APR compounded m times per year
-  // into effective rate per payment period
   return Math.pow(1 + annualRateDecimal / m, m / paymentsPerYear) - 1;
 }
 
-function calculateLoanPayment() {
+// Helper to get growth factor over 'years' for deferred/bond cases
+function growthFactor(annualRateDecimal, compoundKey, years) {
+  const compound = compoundConfig[compoundKey];
+
+  if (!compound) return 1 + annualRateDecimal * years;
+
+  if (compound.type === "continuous") {
+    return Math.exp(annualRateDecimal * years);
+  }
+
+  const m = compound.periodsPerYear;
+  return Math.pow(1 + annualRateDecimal / m, m * years);
+}
+
+function hideAllResults() {
+  document.getElementById("results-amortized").style.display = "none";
+  document.getElementById("results-deferred").style.display = "none";
+  document.getElementById("results-bond").style.display = "none";
+}
+
+function onLoanTypeChange() {
+  const type = document.getElementById("loanType").value;
+  const description = document.getElementById("loanTypeDescription");
+  const amountLabel = document.getElementById("amountLabel");
+  const paybackRow = document.getElementById("paybackRow");
+
+  hideAllResults();
+
+  if (type === "amortized") {
+    description.textContent =
+      "Amortized loan: pay back a fixed amount regularly until the loan is fully repaid.";
+    amountLabel.firstChild.textContent = "Loan Amount (€)";
+    paybackRow.style.display = "block";
+  } else if (type === "deferred") {
+    description.textContent =
+      "Deferred payment loan: interest accumulates and you pay a single lump sum at loan maturity.";
+    amountLabel.firstChild.textContent = "Loan Amount (€)";
+    paybackRow.style.display = "none";
+  } else if (type === "bond") {
+    description.textContent =
+      "Bond: compute the initial amount you receive today for a predetermined amount due at maturity.";
+    amountLabel.firstChild.textContent = "Predetermined Due Amount (€)";
+    paybackRow.style.display = "none";
+  }
+}
+
+function calculateLoan() {
+  const loanType = document.getElementById("loanType").value;
+
   const amount = parseFloat(document.getElementById("loanAmount").value);
   const annualRate = parseFloat(document.getElementById("interestRate").value);
-  const years = parseFloat(document.getElementById("loanYears").value);
+  const years = parseFloat(document.getElementById("loanYears").value) || 0;
+  const months = parseFloat(document.getElementById("loanMonths").value) || 0;
   const compoundKey = document.getElementById("compoundFrequency").value;
-  const paymentKey = document.getElementById("paymentFrequency").value;
+
+  const totalYears = years + months / 12;
 
   if (
-    isNaN(amount) || amount <= 0 ||
-    isNaN(annualRate) || annualRate < 0 ||
-    isNaN(years) || years <= 0
+    isNaN(amount) ||
+    amount <= 0 ||
+    isNaN(annualRate) ||
+    annualRate < 0 ||
+    totalYears <= 0
   ) {
-    alert("Please enter valid positive numbers for loan amount, rate and term.");
+    alert(
+      "Please enter valid positive values for amount, interest rate, and loan term."
+    );
     return;
   }
 
-  const paymentCfg = paymentConfig[paymentKey];
-  const paymentsPerYear = paymentCfg.periodsPerYear;
-  const n = years * paymentsPerYear; // total number of payments
-
   const rAnnualDecimal = annualRate / 100;
-  const rPeriod = getPeriodicRate(rAnnualDecimal, compoundKey, paymentsPerYear);
 
-  let paymentPerPeriod;
+  hideAllResults();
 
-  if (rPeriod === 0) {
-    paymentPerPeriod = amount / n;
-  } else {
-    // Standard amortization formula with per-period rate and n payments
-    paymentPerPeriod =
-      amount * (rPeriod * Math.pow(1 + rPeriod, n)) /
-      (Math.pow(1 + rPeriod, n) - 1);
+  if (loanType === "amortized") {
+    const paymentKey = document.getElementById("paymentFrequency").value;
+    const paymentCfg = paymentConfig[paymentKey];
+    const paymentsPerYear = paymentCfg.periodsPerYear;
+    const n = totalYears * paymentsPerYear;
+
+    const rPeriod = getPeriodicRate(
+      rAnnualDecimal,
+      compoundKey,
+      paymentsPerYear
+    );
+
+    let paymentPerPeriod;
+    if (rPeriod === 0) {
+      paymentPerPeriod = amount / n;
+    } else {
+      paymentPerPeriod =
+        (amount * rPeriod * Math.pow(1 + rPeriod, n)) /
+        (Math.pow(1 + rPeriod, n) - 1);
+    }
+
+    const totalPaid = paymentPerPeriod * n;
+    const totalInterest = totalPaid - amount;
+
+    document.getElementById("paymentLabel").textContent = paymentCfg.label;
+    document.getElementById("periodicPayment").textContent =
+      paymentPerPeriod.toFixed(2) + " €";
+    document.getElementById("numPayments").textContent = n.toFixed(0);
+    document.getElementById("totalPaid").textContent =
+      totalPaid.toFixed(2) + " €";
+    document.getElementById("totalInterest").textContent =
+      totalInterest.toFixed(2) + " €";
+
+    document.getElementById("results-amortized").style.display = "block";
+  } else if (loanType === "deferred") {
+    // Simple lump-sum at maturity
+    if (rAnnualDecimal === 0) {
+      document.getElementById("deferredAmountDue").textContent =
+        amount.toFixed(2) + " €";
+      document.getElementById("deferredTotalInterest").textContent =
+        "0.00 €";
+    } else {
+      const factor = growthFactor(rAnnualDecimal, compoundKey, totalYears);
+      const amountDue = amount * factor;
+      const totalInterest = amountDue - amount;
+
+      document.getElementById("deferredAmountDue").textContent =
+        amountDue.toFixed(2) + " €";
+      document.getElementById("deferredTotalInterest").textContent =
+        totalInterest.toFixed(2) + " €";
+    }
+
+    document.getElementById("results-deferred").style.display = "block";
+  } else if (loanType === "bond") {
+    // Predetermined due amount => compute present value
+    if (rAnnualDecimal === 0) {
+      document.getElementById("bondPresentValue").textContent =
+        amount.toFixed(2) + " €";
+      document.getElementById("bondTotalInterest").textContent = "0.00 €";
+    } else {
+      const factor = growthFactor(rAnnualDecimal, compoundKey, totalYears);
+      const presentValue = amount / factor;
+      const totalInterest = amount - presentValue;
+
+      document.getElementById("bondPresentValue").textContent =
+        presentValue.toFixed(2) + " €";
+      document.getElementById("bondTotalInterest").textContent =
+        totalInterest.toFixed(2) + " €";
+    }
+
+    document.getElementById("results-bond").style.display = "block";
   }
-
-  const totalPaid = paymentPerPeriod * n;
-  const totalInterest = totalPaid - amount;
-
-  // Update UI
-  document.getElementById("paymentLabel").textContent = paymentCfg.label;
-  document.getElementById("periodicPayment").textContent =
-    paymentPerPeriod.toFixed(2) + " €";
-  document.getElementById("numPayments").textContent = n.toFixed(0);
-  document.getElementById("totalPaid").textContent = totalPaid.toFixed(2) + " €";
-  document.getElementById("totalInterest").textContent = totalInterest.toFixed(2) + " €";
-  document.getElementById("results").style.display = "block";
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  document.getElementById("calcBtn").addEventListener("click", calculateLoanPayment);
+  document
+    .getElementById("loanType")
+    .addEventListener("change", onLoanTypeChange);
+  document.getElementById("calcBtn").addEventListener("click", calculateLoan);
+  onLoanTypeChange(); // set initial description
 });
