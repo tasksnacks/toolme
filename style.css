@@ -460,7 +460,69 @@ button:active {
   padding: 0;
   color: var(--text-muted);
 }
+/* Breadcrumbs */
 
+.breadcrumbs {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0 0 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.breadcrumbs a {
+  color: var(--blue-dark);
+  text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumbs .current {
+  font-weight: 500;
+}
+
+/* Checkbox row */
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  margin: 10px 0 4px;
+}
+
+.checkbox-row input {
+  margin: 0;
+}
+
+/* Count-from row for second calculator */
+
+.count-from-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0 8px;
+}
+
+.count-from-row select {
+  width: auto;
+  min-width: 50px;
+}
+
+.count-from-row input[type="number"] {
+  max-width: 120px;
+}
+
+/* Slight tweak: make date inputs full-width on mobile */
+
+@media (max-width: 640px) {
+  .count-from-row {
+    flex-wrap: wrap;
+  }
+}
 /* Responsive layout for info section */
 
 @media (max-width: 960px) {
