@@ -1,130 +1,183 @@
+/* Helper: Format number as Currency (USD) */
+const moneyFormatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2
+});
+
+function formatMoney(value) {
+    return moneyFormatter.format(value);
+}
+
+/* Time Mode Logic */
 function getTimeMode() {
-  const radios = document.querySelectorAll('input[name="timeMode"]');
-  for (const r of radios) {
-    if (r.checked) return r.value;
-  }
-  return "length";
+    const radios = document.querySelectorAll('input[name="timeMode"]');
+    for (const r of radios) {
+        if (r.checked) return r.value;
+    }
+    return "length";
 }
 
 function switchTimeMode() {
-  const mode = getTimeMode();
-  const lengthBlock = document.getElementById("timeLengthBlock");
-  const datesBlock = document.getElementById("timeDatesBlock");
+    const mode = getTimeMode();
+    const lengthBlock = document.getElementById("timeLengthBlock");
+    const datesBlock = document.getElementById("timeDatesBlock");
 
-  if (mode === "length") {
-    lengthBlock.style.display = "block";
-    datesBlock.style.display = "none";
-  } else {
-    lengthBlock.style.display = "none";
-    datesBlock.style.display = "block";
-  }
+    if (mode === "length") {
+        lengthBlock.style.display = "block";
+        datesBlock.style.display = "none";
+    } else {
+        lengthBlock.style.display = "none";
+        datesBlock.style.display = "block";
+    }
 }
 
+/* Calculation Helpers */
 function calculateYearsFromLength() {
-  const years = parseFloat(document.getElementById("timeYears").value) || 0;
-  const months = parseFloat(document.getElementById("timeMonths").value) || 0;
-  return years + months / 12;
+    const years = parseFloat(document.getElementById("timeYears").value) || 0;
+    const months = parseFloat(document.getElementById("timeMonths").value) || 0;
+    return years + months / 12;
 }
 
 function calculateYearsFromDates() {
-  const startValue = document.getElementById("startDate").value;
-  const endValue = document.getElementById("endDate").value;
+    const startValue = document.getElementById("startDate").value;
+    const endValue = document.getElementById("endDate").value;
+    const startInput = document.getElementById("startDate");
+    const endInput = document.getElementById("endDate");
 
-  if (!startValue || !endValue) return null;
+    startInput.style.borderColor = "";
+    endInput.style.borderColor = "";
 
-  const start = new Date(startValue);
-  const end = new Date(endValue);
+    if (!startValue || !endValue) return null;
 
-  if (isNaN(start.getTime()) || isNaN(end.getTime())) return null;
-  if (end <= start) return null;
+    const start = new Date(startValue);
+    const end = new Date(endValue);
 
-  const diffMs = end - start;
-  const diffYears = diffMs / (1000 * 60 * 60 * 24 * 365.25); // approx
-  return diffYears;
+    if (isNaN(start.getTime()) || isNaN(end.getTime())) return null;
+    
+    if (end <= start) {
+        startInput.style.borderColor = "#ef4444";
+        endInput.style.borderColor = "#ef4444";
+        return null;
+    }
+
+    const diffMs = end - start;
+    // Approximation including leap years
+    const diffYears = diffMs / (1000 * 60 * 60 * 24 * 365.25); 
+    return diffYears;
 }
 
-function formatYears(years) {
-  if (years <= 0) return "N/A";
+function formatDurationText(years) {
+    if (years <= 0) return "N/A";
 
-  if (years < 1) {
-    const months = Math.round(years * 12);
-    return months + (months === 1 ? " month" : " months");
-  }
+    if (years < 1) {
+        const months = Math.round(years * 12);
+        return months + (months === 1 ? " Month" : " Months");
+    }
 
-  const fullYears = Math.floor(years);
-  const remainingMonths = Math.round((years - fullYears) * 12);
+    const fullYears = Math.floor(years);
+    const remainingMonths = Math.round((years - fullYears) * 12);
 
-  let parts = [];
-  if (fullYears > 0) {
-    parts.push(fullYears + (fullYears === 1 ? " year" : " years"));
-  }
-  if (remainingMonths > 0) {
-    parts.push(remainingMonths + (remainingMonths === 1 ? " month" : " months"));
-  }
+    let parts = [];
+    if (fullYears > 0) {
+        parts.push(fullYears + (fullYears === 1 ? " Year" : " Years"));
+    }
+    if (remainingMonths > 0) {
+        parts.push(remainingMonths + (remainingMonths === 1 ? " Month" : " Months"));
+    }
 
-  return parts.join(" ");
+    return parts.join(", ");
 }
 
+/* Main Calculation */
 function calculateRoi() {
-  const invested = parseFloat(document.getElementById("amountInvested").value);
-  const returned = parseFloat(document.getElementById("amountReturned").value);
-  const mode = getTimeMode();
+    // 1. Get Elements
+    const elInvested = document.getElementById("amountInvested");
+    const elReturned = document.getElementById("amountReturned");
+    
+    // 2. Parse Values
+    const invested = parseFloat(elInvested.value);
+    const returned = parseFloat(elReturned.value);
+    const mode = getTimeMode();
 
-  if (isNaN(invested) || invested <= 0) {
-    alert("Please enter a positive amount invested.");
-    return;
-  }
-  if (isNaN(returned)) {
-    alert("Please enter the amount returned.");
-    return;
-  }
+    // 3. Reset Styles
+    elInvested.style.borderColor = "";
+    elReturned.style.borderColor = "";
 
-  // ROI
-  const gain = returned - invested;
-  const roiDecimal = gain / invested;
-  const roiPercent = roiDecimal * 100;
+    // 4. Validation
+    let isValid = true;
+    if (isNaN(invested) || invested <= 0) {
+        elInvested.style.borderColor = "#ef4444";
+        isValid = false;
+    }
+    if (isNaN(returned)) {
+        elReturned.style.borderColor = "#ef4444";
+        isValid = false;
+    }
 
-  // Time
-  let years = null;
-  if (mode === "length") {
-    years = calculateYearsFromLength();
-  } else {
-    years = calculateYearsFromDates();
-  }
+    if (!isValid) return;
 
-  const resultsBlock = document.getElementById("roiResults");
-  const roiPercentEl = document.getElementById("roiPercent");
-  const roiGainEl = document.getElementById("roiGain");
-  const roiYearsTextEl = document.getElementById("roiYearsText");
-  const roiAnnualEl = document.getElementById("roiAnnual");
+    // 5. Basic ROI Calculation
+    const gain = returned - invested;
+    const roiDecimal = gain / invested;
+    const roiPercent = roiDecimal * 100;
 
-  roiPercentEl.textContent = roiPercent.toFixed(2) + " %";
-  roiGainEl.textContent = gain.toFixed(2) + " €";
+    // 6. Time Calculation
+    let years = null;
+    if (mode === "length") {
+        years = calculateYearsFromLength();
+    } else {
+        years = calculateYearsFromDates();
+    }
 
-  let annualText = "N/A";
-  let yearsText = "N/A";
+    // 7. Update DOM Results
+    const resultsBlock = document.getElementById("roiResults");
+    const roiPercentEl = document.getElementById("roiPercent");
+    const roiGainEl = document.getElementById("roiGain");
+    const roiYearsTextEl = document.getElementById("roiYearsText");
+    const roiAnnualEl = document.getElementById("roiAnnual");
 
-  if (years !== null && years > 0) {
-    yearsText = formatYears(years);
-    const annualDecimal = Math.pow(1 + roiDecimal, 1 / years) - 1;
-    const annualPercent = annualDecimal * 100;
-    annualText = isFinite(annualPercent) ? annualPercent.toFixed(2) + " %" : "N/A";
-  }
+    roiPercentEl.textContent = roiPercent.toFixed(2) + "%";
+    roiGainEl.textContent = formatMoney(gain);
 
-  roiYearsTextEl.textContent = yearsText;
-  roiAnnualEl.textContent = annualText;
+    // 8. Annualized Calculation
+    let annualText = "-";
+    let yearsText = "Unknown Duration";
 
-  resultsBlock.style.display = "block";
+    if (years !== null && years > 0) {
+        yearsText = formatDurationText(years);
+        
+        // Annualized Formula: (1 + totalROI)^(1/n) - 1
+        // We only calculate this if totalROI is logical (> -100%)
+        if (roiDecimal >= -1) {
+            const annualDecimal = Math.pow(1 + roiDecimal, 1 / years) - 1;
+            const annualPercent = annualDecimal * 100;
+            annualText = isFinite(annualPercent) ? annualPercent.toFixed(2) + "%" : "-";
+        }
+    } else if (mode === "dates") {
+        yearsText = "Invalid Dates";
+    }
+
+    roiYearsTextEl.textContent = yearsText;
+    roiAnnualEl.textContent = annualText;
+
+    resultsBlock.style.display = "block";
 }
 
+/* Initialization */
 document.addEventListener("DOMContentLoaded", function () {
-  // Time mode toggle behavior
-  const radios = document.querySelectorAll('input[name="timeMode"]');
-  radios.forEach((r) => {
-    r.addEventListener("change", switchTimeMode);
-  });
-  switchTimeMode();
+    // Attach toggle listeners
+    const radios = document.querySelectorAll('input[name="timeMode"]');
+    radios.forEach((r) => {
+        r.addEventListener("change", switchTimeMode);
+    });
+    
+    // Initial state check
+    switchTimeMode();
 
-  // Calculate button
-  document.getElementById("calcRoiBtn").addEventListener("click", calculateRoi);
+    // Calculate button
+    const calcBtn = document.getElementById("calcRoiBtn");
+    if (calcBtn) {
+        calcBtn.addEventListener("click", calculateRoi);
+    }
 });
