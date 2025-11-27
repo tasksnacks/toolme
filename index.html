@@ -8,7 +8,7 @@
 </head>
 
 <body>
-  <!-- Header -->
+  <!-- Header with logo -->
   <header class="site-header">
     <div class="site-header-inner center-header">
       <a href="index.html" class="logo-link">
@@ -17,67 +17,121 @@
     </div>
   </header>
 
-  <!-- Main home layout -->
   <main class="home">
-    <section class="app-shell">
-      <!-- Top row: greeting -->
-      <div class="app-shell-top">
-        <div class="home-greeting">
-          <p class="home-eyebrow">Daily tools</p>
-          <h1>
-            Ready to make<br />
-            numbers feel easy?
-          </h1>
-          <p class="home-subtitle">
-            Pick a tool and get a clear answer in seconds. No jargon, no clutter.
-          </p>
-        </div>
+    <!-- Glass main container -->
+    <div class="glass-app">
+      <div class="home-layout">
+        <!-- LEFT SIDEBAR -->
+        <aside class="home-sidebar">
+          <button class="sidebar-btn sidebar-btn--primary">+</button>
+          <button class="sidebar-btn">≡</button>
+          <button class="sidebar-btn">?</button>
+          <div class="sidebar-spacer"></div>
+          <div class="sidebar-logo">TM</div>
+        </aside>
 
-        <div class="home-badge">
-          <span class="home-badge-dot"></span>
-          <span>Fast & simple calculators</span>
-        </div>
+        <!-- RIGHT MAIN CONTENT -->
+        <section class="home-main">
+          <!-- Top bar with “upgrade” pill -->
+          <div class="home-main-header">
+            <span class="home-main-label">Daily ToolMe</span>
+            <button class="upgrade-pill">
+              <span>Upgrade</span>
+            </button>
+          </div>
+
+          <!-- HERO ROW -->
+          <div class="home-hero-row">
+            <div class="home-hero-text">
+              <h1>Ready to make your<br />numbers feel easy?</h1>
+              <p>
+                ToolMe gives you clear, friendly calculators for everyday
+                money and time questions. Pick a tool and get an instant answer.
+              </p>
+            </div>
+
+            <div class="home-hero-mascot">
+              <div class="mascot-bubble">
+                <span>Hey there 👋<br />Need a boost?</span>
+              </div>
+              <div class="mascot-body">
+                <div class="mascot-face"></div>
+                <div class="mascot-base"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- MAIN FEATURE CARDS (3) -->
+          <div class="home-tools-grid">
+            <a href="loan-calculator.html" class="home-tool-card">
+              <div class="home-tool-tag">Loans</div>
+              <h2>Loan Calculator</h2>
+              <p>See payments, total cost, and interest for any loan.</p>
+              <span class="home-tool-link">Open tool →</span>
+            </a>
+
+            <a href="roi-calculator.html" class="home-tool-card">
+              <div class="home-tool-tag">ROI</div>
+              <h2>ROI Calculator</h2>
+              <p>Compare how much you really earn from different investments.</p>
+              <span class="home-tool-link">Open tool →</span>
+            </a>
+
+            <a href="investment-calculator.html" class="home-tool-card">
+              <div class="home-tool-tag">Growth</div>
+              <h2>Investment Planner</h2>
+              <p>See how your savings can grow with regular contributions.</p>
+              <span class="home-tool-link">Open tool →</span>
+            </a>
+          </div>
+
+          <!-- SECOND ROW FOR OTHER TOOLS -->
+          <div class="home-tools-grid secondary">
+            <a href="day-counter.html" class="home-tool-card small">
+              <div class="home-tool-tag">Dates</div>
+              <h2>Day Counter</h2>
+              <p>Count days between dates or add days to a date.</p>
+              <span class="home-tool-link">Open tool →</span>
+            </a>
+
+            <a href="case-converter.html" class="home-tool-card small">
+              <div class="home-tool-tag">Text</div>
+              <h2>Case Converter</h2>
+              <p>Switch text to upper, lower, title, or sentence case.</p>
+              <span class="home-tool-link">Open tool →</span>
+            </a>
+          </div>
+
+          <!-- BOTTOM INTERACTION BAR -->
+          <div class="home-bottom">
+            <div class="home-bottom-header">
+              <span class="home-bottom-title">Unlock more with ToolMe</span>
+              <span class="home-bottom-sub">More smart tools coming soon.</span>
+            </div>
+
+            <div class="home-bottom-input">
+              <div class="home-bottom-input-inner">
+                <span class="input-placeholder">
+                  Example: “Calculate my monthly loan payment”
+                </span>
+                <div class="input-icons">
+                  <span class="input-icon">🎙</span>
+                  <span class="input-icon">➤</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="home-bottom-actions">
+              <a href="loan-calculator.html" class="bottom-chip primary">Loan tool</a>
+              <a href="roi-calculator.html" class="bottom-chip primary">ROI tool</a>
+              <a href="investment-calculator.html" class="bottom-chip">Invest</a>
+              <a href="day-counter.html" class="bottom-chip">Days</a>
+              <a href="case-converter.html" class="bottom-chip">Text</a>
+            </div>
+          </div>
+        </section>
       </div>
-
-      <!-- Tool cards row -->
-      <div class="home-tools-grid">
-        <a href="loan-calculator.html" class="home-tool-card">
-          <div class="home-tool-tag">Loans</div>
-          <h2>Loan Calculator</h2>
-          <p>See your payments, total cost, and interest for any loan.</p>
-          <span class="home-tool-link">Open tool →</span>
-        </a>
-
-        <a href="roi-calculator.html" class="home-tool-card">
-          <div class="home-tool-tag">Investments</div>
-          <h2>ROI Calculator</h2>
-          <p>Compare how much you really earn from different investments.</p>
-          <span class="home-tool-link">Open tool →</span>
-        </a>
-
-        <a href="investment-calculator.html" class="home-tool-card">
-          <div class="home-tool-tag">Growth</div>
-          <h2>Investment Planner</h2>
-          <p>See how your savings can grow with regular deposits.</p>
-          <span class="home-tool-link">Open tool →</span>
-        </a>
-      </div>
-
-      <!-- Bottom quick bar -->
-      <div class="home-quickbar">
-        <div class="home-quickbar-left">
-          <span class="home-quickbar-label">Quick access</span>
-          <span class="home-quickbar-chips">
-            <a href="day-counter.html" class="chip">Day Counter</a>
-            <a href="case-converter.html" class="chip">Case Converter</a>
-          </span>
-        </div>
-
-        <div class="home-quickbar-right">
-          <span class="home-quickbar-text">More tools coming soon</span>
-        </div>
-      </div>
-    </section>
+    </div>
   </main>
 
   <footer class="site-footer">
