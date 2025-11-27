@@ -4,122 +4,282 @@
   <meta charset="UTF-8" />
   <title>Loan Calculator – ToolMe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* Two-Column Layout */
+    .calc-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        align-items: start;
+    }
+
+    /* Input Section */
+    .input-card {
+        background: white;
+        padding: 30px;
+        border-radius: 32px;
+        box-shadow: var(--shadow-soft);
+    }
+
+    .input-group { margin-bottom: 20px; }
+    
+    .input-group label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: var(--text-muted);
+    }
+
+    .custom-input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #f1f5f9;
+        border-radius: 12px;
+        font-family: inherit;
+        font-size: 0.95rem;
+        outline: none;
+        transition: 0.2s;
+        background: #f8fafc;
+        color: var(--text-dark);
+    }
+
+    .custom-input:focus {
+        border-color: var(--primary-dark);
+        background: white;
+    }
+
+    /* Grid for shorter inputs */
+    .input-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+
+    .input-row.term-row {
+        grid-template-columns: 2fr 1fr;
+    }
+
+    /* Result Section */
+    .result-card {
+        background: var(--primary-dark);
+        color: white;
+        padding: 30px;
+        border-radius: 32px;
+        box-shadow: var(--shadow-float);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Decorative blurred circle behind text */
+    .result-card::before {
+        content: '';
+        position: absolute;
+        top: -50px;
+        right: -50px;
+        width: 150px;
+        height: 150px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+        filter: blur(20px);
+    }
+
+    .result-card h3 {
+        font-size: 0.9rem;
+        opacity: 0.8;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .big-value {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 25px;
+        color: #fff;
+    }
+
+    .stats-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        border-top: 1px solid rgba(255,255,255,0.15);
+        padding-top: 20px;
+    }
+
+    .stat-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.95rem;
+    }
+
+    .stat-row span { opacity: 0.7; }
+    .stat-row strong { font-weight: 600; }
+
+    /* Loan Description Text */
+    .loan-desc {
+        margin-bottom: 20px;
+        padding: 10px 15px;
+        background: #f0fdf4;
+        border: 1px solid #dcfce7;
+        color: #166534;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        line-height: 1.4;
+    }
+
+    @media (max-width: 900px) {
+        .calc-layout { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 
 <body>
-  <!-- Header -->
-  <header class="site-header">
-    <div class="site-header-inner center-header">
-      <a href="index.html" class="logo-link">
-        <div class="logo">ToolMe</div>
-      </a>
+
+<div class="home">
+    <div class="app-shell">
+        
+        <aside class="sidebar">
+            <div class="sidebar-top">
+                <a href="index.html" class="nav-btn primary-btn">←</a>
+                <button class="nav-btn">💸</button>
+            </div>
+            <div class="sidebar-bottom">
+                <div class="nav-logo">T</div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <header class="top-header">
+                <div class="breadcrumbs">
+                    <a href="index.html" style="color:inherit;">🏠 Home</a> 
+                    <span> / Finance Tools</span>
+                </div>
+                <div class="header-center">Loan Calculator</div>
+                <button class="upgrade-btn">✨ Pro</button>
+            </header>
+
+            <div class="calc-layout">
+                
+                <div class="input-card">
+                    <h2 style="margin-bottom: 20px; font-size:1.2rem;">Loan Settings</h2>
+                    
+                    <div class="input-group">
+                        <label>Loan Type</label>
+                        <select id="loanType" class="custom-input">
+                            <option value="amortized" selected>Amortized (Fixed Payments)</option>
+                            <option value="deferred">Deferred (Lump Sum at End)</option>
+                            <option value="bond">Bond (Pay at Maturity)</option>
+                        </select>
+                    </div>
+
+                    <div id="loanTypeDescription" class="loan-desc">
+                        Amortized loan: Pay back a fixed amount regularly until the loan is fully repaid.
+                    </div>
+
+                    <div class="input-group">
+                        <label id="amountLabel">Loan Amount ($)</label>
+                        <input type="number" id="loanAmount" class="custom-input" placeholder="e.g. 20000" />
+                    </div>
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Interest Rate (%)</label>
+                            <input type="number" id="interestRate" class="custom-input" placeholder="6.5" />
+                        </div>
+                        <div class="input-group">
+                            <label>Compounding</label>
+                            <select id="compoundFrequency" class="custom-input">
+                                <option value="monthly" selected>Monthly</option>
+                                <option value="annually">Annually</option>
+                                <option value="daily">Daily</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Loan Term</label>
+                        <div class="input-row term-row">
+                            <input type="number" id="loanYears" class="custom-input" placeholder="Years (e.g. 10)" />
+                            <input type="number" id="loanMonths" class="custom-input" placeholder="Months" />
+                        </div>
+                    </div>
+
+                    <div class="input-group" id="paybackRow">
+                        <label>Payment Frequency</label>
+                        <select id="paymentFrequency" class="custom-input">
+                            <option value="every_month" selected>Every Month</option>
+                            <option value="every_week">Every Week</option>
+                            <option value="every_year">Every Year</option>
+                        </select>
+                    </div>
+
+                    <button id="calcBtn" class="pill-btn dark" style="width:100%; justify-content:center; margin-top:10px;">Calculate Payments 🧮</button>
+                </div>
+
+                <div class="right-column">
+                    
+                    <div id="results-amortized" class="result-card" style="display:none;">
+                        <h3>Periodic Payment</h3>
+                        <div class="big-value" id="periodicPayment">$0.00</div>
+                        
+                        <div class="stats-list">
+                            <div class="stat-row">
+                                <span>Payment Frequency</span>
+                                <strong id="paymentLabel">-</strong>
+                            </div>
+                            <div class="stat-row">
+                                <span>Total Payments</span>
+                                <strong id="numPayments">0</strong>
+                            </div>
+                            <div class="stat-row">
+                                <span>Total Interest</span>
+                                <strong id="totalInterest">$0.00</strong>
+                            </div>
+                            <div class="stat-row">
+                                <span>Total Cost of Loan</span>
+                                <strong id="totalPaid">$0.00</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="results-deferred" class="result-card" style="display:none; background:#0f766e;">
+                        <h3>Due at Maturity</h3>
+                        <div class="big-value" id="deferredAmountDue">$0.00</div>
+                        
+                        <div class="stats-list">
+                            <div class="stat-row">
+                                <span>Total Interest Accrued</span>
+                                <strong id="deferredTotalInterest">$0.00</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="results-bond" class="result-card" style="display:none; background:#1e3a8a;">
+                        <h3>Receive Today</h3>
+                        <div class="big-value" id="bondPresentValue">$0.00</div>
+                        
+                        <div class="stats-list">
+                            <div class="stat-row">
+                                <span>Total Interest Cost</span>
+                                <strong id="bondTotalInterest">$0.00</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </main>
     </div>
-  </header>
+</div>
 
-  <main class="page">
-    <!-- MAIN LOAN CALCULATOR -->
-    <section class="card">
-      <h2 class="section-title">Loan Calculator</h2>
-      <p id="loanTypeDescription" class="subtitle">
-        Amortized loan: pay back a fixed amount regularly until the loan is fully repaid.
-      </p>
-
-      <div class="calculator">
-        <label id="amountLabel">
-          Loan Amount (€)
-          <input type="number" id="loanAmount" placeholder="e.g. 20000" />
-        </label>
-
-        <div class="grid-2">
-          <label>
-            Annual Interest Rate (%)
-            <input type="number" id="interestRate" placeholder="e.g. 6" />
-          </label>
-
-          <label>
-            Loan Type
-            <select id="loanType">
-              <option value="amortized" selected>Amortized loan (fixed payments)</option>
-              <option value="deferred">Deferred payment loan (lump sum at the end)</option>
-              <option value="bond">Bond (amount due at maturity)</option>
-            </select>
-          </label>
-        </div>
-
-        <label>
-          Loan Term
-          <div class="term-fields">
-            <input type="number" id="loanYears" placeholder="10" />
-            <span class="term-unit">years</span>
-            <input type="number" id="loanMonths" placeholder="0" />
-            <span class="term-unit">months</span>
-          </div>
-        </label>
-
-        <div class="grid-2">
-          <label>
-            Compounding
-            <select id="compoundFrequency">
-              <option value="annually">Annually (APY)</option>
-              <option value="semiannually">Semi-annually</option>
-              <option value="quarterly">Quarterly</option>
-              <option value="monthly" selected>Monthly (APR)</option>
-              <option value="semimonthly">Semi-monthly</option>
-              <option value="biweekly">Biweekly</option>
-              <option value="weekly">Weekly</option>
-              <option value="daily">Daily</option>
-              <option value="continuously">Continuously</option>
-            </select>
-          </label>
-
-          <label id="paybackRow">
-            Pay Back
-            <select id="paymentFrequency">
-              <option value="every_day">Every day</option>
-              <option value="every_week">Every week</option>
-              <option value="every_2_weeks">Every 2 weeks</option>
-              <option value="every_half_month">Every half month</option>
-              <option value="every_month" selected>Every month</option>
-              <option value="every_quarter">Every quarter</option>
-              <option value="every_6_months">Every 6 months</option>
-              <option value="every_year">Every year</option>
-            </select>
-          </label>
-        </div>
-
-        <button id="calcBtn">Calculate</button>
-
-        <!-- Amortized loan results -->
-        <div id="results-amortized" class="results" style="display:none;">
-          <p>Payment every <span id="paymentLabel"></span>: <strong id="periodicPayment"></strong></p>
-          <p>Total number of payments: <strong id="numPayments"></strong></p>
-          <p>Total paid: <strong id="totalPaid"></strong></p>
-          <p>Total interest: <strong id="totalInterest"></strong></p>
-        </div>
-
-        <!-- Deferred loan results -->
-        <div id="results-deferred" class="results" style="display:none;">
-          <p>Amount due at loan maturity: <strong id="deferredAmountDue"></strong></p>
-          <p>Total interest: <strong id="deferredTotalInterest"></strong></p>
-        </div>
-
-        <!-- Bond results -->
-        <div id="results-bond" class="results" style="display:none;">
-          <p>Amount you receive today: <strong id="bondPresentValue"></strong></p>
-          <p>Total interest: <strong id="bondTotalInterest"></strong></p>
-        </div>
-      </div>
-    </section>
-
-    <!-- (optional) explanation cards can stay below here if you like -->
-  </main>
-
-  <footer class="site-footer">
-    <small>ToolMe · simple, friendly financial tools</small>
-  </footer>
-
-  <!-- IMPORTANT: filename must match the actual JS file -->
-  <script src="script-loan.js"></script>
+<script src="script-loan.js"></script>
 </body>
 </html>
