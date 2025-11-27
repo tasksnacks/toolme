@@ -2,191 +2,214 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Day Counter – Count Days Between Dates | ToolMe</title>
+  <title>Day Counter – ToolMe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta
-    name="description"
-    content="Free day counter to count days between two dates or add days to a date. See total days, weekdays, and weekend days quickly with ToolMe."
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* Tool Specific Grid Layout */
+    .tools-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin-bottom: 30px;
+    }
+
+    /* Individual Tool Card */
+    .tool-card {
+        background: white;
+        padding: 30px;
+        border-radius: 32px;
+        box-shadow: var(--shadow-soft);
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .tool-card h2 {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+        color: var(--text-dark);
+    }
+
+    /* Input Styling */
+    .input-group label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: var(--text-muted);
+    }
+
+    .custom-input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #f1f5f9;
+        border-radius: 16px;
+        font-family: inherit;
+        font-size: 0.95rem;
+        outline: none;
+        transition: 0.2s;
+        background: #f8fafc;
+        color: var(--text-dark);
+    }
+
+    .custom-input:focus {
+        border-color: var(--primary-dark);
+        background: white;
+    }
+
+    .row-inputs {
+        display: flex;
+        gap: 10px;
+    }
+
+    /* Results Box */
+    .result-box {
+        background: #eef2ff;
+        border: 1px solid #e0e7ff;
+        padding: 20px;
+        border-radius: 20px;
+        margin-top: 10px;
+    }
+
+    .result-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+    }
+    .result-item:last-child { margin-bottom: 0; }
+    .result-item strong { color: var(--primary-dark); }
+
+    /* SEO/Info Section at bottom */
+    .info-section {
+        background: rgba(255,255,255,0.4);
+        border-radius: 24px;
+        padding: 30px;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        color: var(--text-muted);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+    }
+
+    @media (max-width: 900px) {
+        .tools-row, .info-section { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 
 <body>
-  <!-- Header -->
-  <header class="site-header">
-    <div class="site-header-inner center-header">
-      <a href="index.html" class="logo-link">
-        <div class="logo">ToolMe</div>
-      </a>
+
+<div class="home">
+    <div class="app-shell">
+        
+        <aside class="sidebar">
+            <div class="sidebar-top">
+                <a href="index.html" class="nav-btn primary-btn">←</a>
+                <button class="nav-btn">📅</button>
+            </div>
+            <div class="sidebar-bottom">
+                <div class="nav-logo">T</div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <header class="top-header">
+                <div class="breadcrumbs">
+                    <a href="index.html" style="color:inherit;">🏠 Home</a> 
+                    <span> / Date Tools</span>
+                </div>
+                <div class="header-center">Day Counter</div>
+                <button class="upgrade-btn">✨ Pro</button>
+            </header>
+
+            <div class="tools-row">
+                
+                <section class="tool-card">
+                    <div>
+                        <h2>Days between two dates</h2>
+                        <p style="font-size:0.9rem; color:var(--text-muted);">Calculate duration between a start and end date.</p>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Start Date</label>
+                        <input type="date" id="dcStartDate" class="custom-input" />
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>End Date</label>
+                        <input type="date" id="dcEndDate" class="custom-input" />
+                    </div>
+
+                    <label style="display:flex; align-items:center; gap:10px; font-size:0.9rem;">
+                        <input type="checkbox" id="dcIncludeEnd" /> Include end day?
+                    </label>
+
+                    <button id="dcCalculateBtn" class="pill-btn dark" style="width:100%; justify-content:center;">Calculate Days</button>
+
+                    <div id="dcResults" class="result-box" style="display:none;">
+                        <div class="result-item"><span>Total days:</span> <strong id="dcTotalDays">-</strong></div>
+                        <div class="result-item"><span>Weekdays:</span> <strong id="dcWeekdays">-</strong></div>
+                        <div class="result-item"><span>Weekends:</span> <strong id="dcWeekendDays">-</strong></div>
+                    </div>
+                </section>
+
+
+                <section class="tool-card">
+                    <div>
+                        <h2>Add or Subtract Days</h2>
+                        <p style="font-size:0.9rem; color:var(--text-muted);">Find out what date it will be in the future or past.</p>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Start Date</label>
+                        <input type="date" id="cfStartDate" class="custom-input" />
+                    </div>
+
+                    <div class="input-group">
+                        <label>Days to add/subtract</label>
+                        <div class="row-inputs">
+                            <select id="cfDirection" class="custom-input" style="width:70px;">
+                                <option value="+">+</option>
+                                <option value="-">−</option>
+                            </select>
+                            <input type="number" id="cfDays" placeholder="e.g. 30" class="custom-input" />
+                        </div>
+                    </div>
+
+                    <label style="display:flex; align-items:center; gap:10px; font-size:0.9rem;">
+                        <input type="checkbox" id="cfBusinessOnly" /> Business days only? (Skip Sat/Sun)
+                    </label>
+
+                    <button id="cfCalculateBtn" class="pill-btn dark" style="width:100%; justify-content:center;">Calculate Date</button>
+
+                    <div id="cfResults" class="result-box" style="display:none;">
+                        <div class="result-item"><span>Result Date:</span> <strong id="cfResultDate">-</strong></div>
+                        <div class="result-item"><span>Day of Week:</span> <strong id="cfResultDay">-</strong></div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="info-section">
+                <div>
+                    <strong style="display:block; margin-bottom:10px; color:var(--text-dark);">How it works</strong>
+                    <p>Select your dates above to instantly calculate duration or project deadlines. We handle leap years and differing month lengths automatically.</p>
+                </div>
+                <div>
+                    <strong style="display:block; margin-bottom:10px; color:var(--text-dark);">Business Days</strong>
+                    <p>In "Business days only" mode, we automatically skip Saturdays and Sundays to give you an accurate work-day estimate.</p>
+                </div>
+            </div>
+
+        </main>
     </div>
-  </header>
+</div>
 
-  <main class="page">
-    <!-- Breadcrumbs for SEO + UX -->
-    <nav class="breadcrumbs" aria-label="Breadcrumb">
-      <a href="index.html">Home</a>
-      <span>›</span>
-      <span>Other tools</span>
-      <span>›</span>
-      <span class="current">Day Counter</span>
-    </nav>
-
-    <!-- Card 1: Day counter between dates -->
-    <section class="card">
-      <h1 class="section-title">Day Counter</h1>
-      <p class="subtitle">
-        Count how many days are between two dates and see how many of them are weekdays and weekend days.
-      </p>
-
-      <div class="calculator">
-        <div class="grid-2">
-          <label>
-            Start date
-            <input type="date" id="dcStartDate" />
-          </label>
-          <label>
-            End date
-            <input type="date" id="dcEndDate" />
-          </label>
-        </div>
-
-        <label class="checkbox-row">
-          <input type="checkbox" id="dcIncludeEnd" />
-          <span>Include end day in the count</span>
-        </label>
-
-        <button id="dcCalculateBtn">Calculate days</button>
-
-        <div id="dcResults" class="results" style="display:none;">
-          <p>Total days: <strong id="dcTotalDays"></strong></p>
-          <p>Weekdays (Mon–Fri): <strong id="dcWeekdays"></strong></p>
-          <p>Weekend days (Sat–Sun): <strong id="dcWeekendDays"></strong></p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Card 2: Count days from a date -->
-    <section class="card">
-      <h2 class="section-title">Count days from a date</h2>
-      <p class="subtitle">
-        Pick a start date and see what date it will be after adding or subtracting a number of days.
-      </p>
-
-      <div class="calculator">
-        <label>
-          Start date
-          <input type="date" id="cfStartDate" />
-        </label>
-
-        <div class="count-from-row">
-          <select id="cfDirection">
-            <option value="+">+</option>
-            <option value="-">−</option>
-          </select>
-          <input type="number" id="cfDays" placeholder="15" />
-          <span class="term-unit">days</span>
-        </div>
-
-        <label class="checkbox-row">
-          <input type="checkbox" id="cfBusinessOnly" />
-          <span>Count business days only (skip weekends)</span>
-        </label>
-
-        <button id="cfCalculateBtn">Calculate date</button>
-
-        <div id="cfResults" class="results" style="display:none;">
-          <p>Resulting date: <strong id="cfResultDate"></strong></p>
-          <p>Day of the week: <strong id="cfResultDay"></strong></p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Explanation / SEO text -->
-    <section class="card card-info">
-      <h3 class="info-title">How to use the day counter</h3>
-
-      <div class="info-grid">
-        <div class="info-block">
-          <h4>Days between two dates</h4>
-          <p>
-            Choose a start date and an end date, then press <strong>“Calculate days”</strong>.
-            We count how many full days are in between and split them into weekdays
-            (Monday to Friday) and weekend days (Saturday and Sunday).
-          </p>
-          <p>
-            Turn on <strong>“Include end day”</strong> if you want the last date to be counted as well.
-            For example, for a project due on a certain day, you may want to include that day.
-          </p>
-        </div>
-
-        <div class="info-block">
-          <h4>Count days from a date</h4>
-          <p>
-            Pick a starting date and choose how many days to add or subtract. The calculator
-            will show you what date you land on and which day of the week it is.
-          </p>
-          <p>
-            If you only care about working days, tick
-            <strong>“Count business days only”</strong>. In that case we skip Saturdays and Sundays.
-          </p>
-        </div>
-
-        <div class="info-block">
-          <h4>Typical uses</h4>
-          <p>
-            People use this kind of day counter to:
-          </p>
-          <ul>
-            <li>Plan deadlines and project schedules</li>
-            <li>Count down to events, trips, or birthdays</li>
-            <li>Estimate pregnancy weeks or recovery periods</li>
-            <li>Check how many work days are left before a due date</li>
-          </ul>
-        </div>
-      </div>
-
-      <h3 class="info-title basics-title">Business days and holidays</h3>
-      <div class="info-grid basics-grid">
-        <div class="info-block small">
-          <h4>Business days</h4>
-          <p>
-            In this calculator, business days are Monday to Friday. Weekends (Saturday and Sunday)
-            are always counted separately and can be skipped in the “business days only” mode.
-          </p>
-        </div>
-
-        <div class="info-block small">
-          <h4>Holidays</h4>
-          <p>
-            Different countries and companies follow different holidays. To keep things simple,
-            this version of the calculator does not include public holidays yet. In the future,
-            we plan to let you mark specific dates as holidays and exclude them from business days.
-          </p>
-        </div>
-
-        <div class="info-block small">
-          <h4>Start and end days</h4>
-          <p>
-            The start date is always counted as a full day. The end date is only counted when
-            you check the <strong>“Include end day”</strong> box.
-          </p>
-        </div>
-
-        <div class="info-block small">
-          <h4>Day of the week</h4>
-          <p>
-            For any result date, we also show the day of the week so you can quickly see whether
-            it falls on a weekday or weekend.
-          </p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <small>ToolMe · simple, friendly financial and date tools</small>
-  </footer>
-
-  <script src="script-daycounter.js"></script>
+<script src="script-daycounter.js"></script>
 </body>
 </html>
