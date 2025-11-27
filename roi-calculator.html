@@ -4,179 +4,321 @@
   <meta charset="UTF-8" />
   <title>ROI Calculator – ToolMe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* Two-Column Layout */
+    .calc-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        align-items: start;
+    }
+
+    /* Input Section */
+    .input-card {
+        background: white;
+        padding: 30px;
+        border-radius: 32px;
+        box-shadow: var(--shadow-soft);
+    }
+
+    .input-group { margin-bottom: 20px; }
+    
+    .input-group label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: var(--text-muted);
+    }
+
+    .custom-input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #f1f5f9;
+        border-radius: 12px;
+        font-family: inherit;
+        font-size: 0.95rem;
+        outline: none;
+        transition: 0.2s;
+        background: #f8fafc;
+        color: var(--text-dark);
+    }
+
+    .custom-input:focus {
+        border-color: var(--primary-dark);
+        background: white;
+    }
+
+    /* Segmented Control for Time Mode */
+    .segmented-control {
+        display: flex;
+        background: #f1f5f9;
+        padding: 4px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+    }
+
+    .segmented-control label {
+        flex: 1;
+        text-align: center;
+        padding: 10px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        border-radius: 8px;
+        color: var(--text-muted);
+        transition: all 0.2s;
+        margin-bottom: 0 !important; /* Override default label margin */
+    }
+
+    .segmented-control input[type="radio"] {
+        display: none;
+    }
+
+    /* Style for checked state */
+    .segmented-control label:has(input:checked) {
+        background: white;
+        color: var(--primary-dark);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    /* Grid for shorter inputs */
+    .input-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+
+    /* Result Section */
+    .result-card {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%); /* Green Gradient */
+        color: white;
+        padding: 30px;
+        border-radius: 32px;
+        box-shadow: var(--shadow-float);
+        text-align: center;
+        margin-bottom: 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Decorative circle */
+    .result-card::before {
+        content: '';
+        position: absolute;
+        top: -60px;
+        left: -60px;
+        width: 180px;
+        height: 180px;
+        background: rgba(255,255,255,0.15);
+        border-radius: 50%;
+    }
+
+    .result-card h3 {
+        font-size: 0.9rem;
+        opacity: 0.9;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .big-percent {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 25px;
+        color: #fff;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .stats-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        border-top: 1px solid rgba(255,255,255,0.2);
+        padding-top: 20px;
+    }
+
+    .stat-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.95rem;
+    }
+
+    .stat-row span { opacity: 0.8; }
+    .stat-row strong { font-weight: 600; font-size: 1.1rem; }
+
+    /* Info Section */
+    .info-section {
+        background: rgba(255,255,255,0.5);
+        border-radius: 24px;
+        padding: 30px;
+        margin-top: 30px;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        line-height: 1.6;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+    }
+
+    .small-hint {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin-top: 8px;
+    }
+
+    @media (max-width: 900px) {
+        .calc-layout, .info-section { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 
 <body>
-  <!-- Header with centered ToolMe -->
-  <header class="site-header">
-    <div class="site-header-inner center-header">
-      <a href="index.html" class="logo-link">
-        <div class="logo">ToolMe</div>
-      </a>
+
+<div class="home">
+    <div class="app-shell">
+        
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-top">
+                <a href="index.html" class="nav-btn primary-btn">←</a>
+                <button class="nav-btn">📈</button>
+            </div>
+            <div class="sidebar-bottom">
+                <div class="nav-logo">T</div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            
+            <header class="top-header">
+                <div class="breadcrumbs">
+                    <a href="index.html" style="color:inherit;">🏠 Home</a> 
+                    <span> / Finance Tools</span>
+                </div>
+                <div class="header-center">ROI Calculator</div>
+                <button class="upgrade-btn">✨ Pro</button>
+            </header>
+
+            <div class="calc-layout">
+                
+                <!-- Left: Configuration -->
+                <div class="input-card">
+                    <h2 style="margin-bottom: 20px; font-size:1.2rem;">Investment Details</h2>
+                    
+                    <div class="input-group">
+                        <label>Amount Invested ($)</label>
+                        <input type="number" id="amountInvested" class="custom-input" placeholder="e.g. 5000" />
+                    </div>
+
+                    <div class="input-group">
+                        <label>Amount Returned ($)</label>
+                        <input type="number" id="amountReturned" class="custom-input" placeholder="e.g. 6500" />
+                    </div>
+
+                    <hr style="border:0; border-top:1px solid #f1f5f9; margin: 25px 0;">
+
+                    <div class="input-group">
+                        <label style="margin-bottom:12px;">Calculation Method</label>
+                        <div class="segmented-control">
+                            <label>
+                                <input type="radio" name="timeMode" value="length" checked />
+                                By Duration
+                            </label>
+                            <label>
+                                <input type="radio" name="timeMode" value="dates" />
+                                By Dates
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Mode: Length -->
+                    <div id="timeLengthBlock">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label>Years</label>
+                                <input type="number" id="timeYears" class="custom-input" placeholder="0" />
+                            </div>
+                            <div class="input-group">
+                                <label>Months</label>
+                                <input type="number" id="timeMonths" class="custom-input" placeholder="0" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mode: Dates -->
+                    <div id="timeDatesBlock" style="display:none;">
+                        <div class="input-group">
+                            <label>Start Date</label>
+                            <input type="date" id="startDate" class="custom-input" />
+                        </div>
+                        <div class="input-group">
+                            <label>End Date</label>
+                            <input type="date" id="endDate" class="custom-input" />
+                        </div>
+                        <p class="small-hint">We'll calculate the exact duration based on these dates.</p>
+                    </div>
+
+                    <button id="calcRoiBtn" class="pill-btn dark" style="width:100%; justify-content:center; margin-top:10px;">Calculate ROI 🚀</button>
+                </div>
+
+                <!-- Right: Results -->
+                <div class="right-column">
+                    
+                    <!-- Result Card -->
+                    <div id="roiResults" class="result-card" style="display:none;">
+                        <h3>Total ROI</h3>
+                        <div class="big-percent" id="roiPercent">0%</div>
+                        
+                        <div class="stats-list">
+                            <div class="stat-row">
+                                <span>Total Profit</span>
+                                <strong id="roiGain">$0.00</strong>
+                            </div>
+                            <div class="stat-row">
+                                <span>Duration</span>
+                                <strong id="roiYearsText">-</strong>
+                            </div>
+                            <div class="stat-row">
+                                <span>Annualized ROI</span>
+                                <strong id="roiAnnual">0%</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Simplified Explanation (moved from bottom) -->
+                    <div class="card" style="background:white; padding:25px; border-radius:24px; box-shadow:var(--shadow-soft);">
+                        <h4 style="margin-bottom:10px; font-size:1rem;">What is Annualized ROI?</h4>
+                        <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.5;">
+                            Earning 20% in one year is very different from earning 20% over ten years. Annualized ROI shows you the yearly efficiency rate so you can compare investments of different lengths fairly.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- SEO / Extra Info -->
+            <div class="info-section">
+                <div>
+                    <strong>Understanding ROI</strong>
+                    <p>ROI (Return on Investment) answers the simple question: "For every dollar I put in, how much did I get back?" It is the most common metric for evaluating financial success.</p>
+                </div>
+                <div>
+                    <strong>Why use this tool?</strong>
+                    <p>Unlike simple calculators, we let you input specific dates to handle real-world scenarios where investments don't fit perfectly into "1 year" blocks.</p>
+                </div>
+            </div>
+
+        </main>
     </div>
-  </header>
+</div>
 
-  <main class="page">
-    <!-- ROI Calculator Card -->
-    <section class="card">
-      <h2 class="section-title">Return on Investment (ROI)</h2>
-      <p class="subtitle">
-        See how much you got back compared to what you put in, and how that looks per year.
-      </p>
-
-      <div class="calculator">
-        <label>
-          Amount invested
-          <input type="number" id="amountInvested" placeholder="e.g. 5000" />
-        </label>
-
-        <label>
-          Amount returned
-          <input type="number" id="amountReturned" placeholder="e.g. 6500" />
-        </label>
-
-        <!-- Time input mode toggle -->
-        <div class="roi-time-toggle">
-          <span>Investment time:</span>
-          <label class="roi-toggle-option">
-            <input type="radio" name="timeMode" value="length" checked />
-            Length (years & months)
-          </label>
-          <label class="roi-toggle-option">
-            <input type="radio" name="timeMode" value="dates" />
-            Using dates
-          </label>
-        </div>
-
-        <!-- Length mode -->
-        <div id="timeLengthBlock">
-          <div class="term-fields">
-            <input type="number" id="timeYears" placeholder="2" />
-            <span class="term-unit">years</span>
-            <input type="number" id="timeMonths" placeholder="0" />
-            <span class="term-unit">months</span>
-          </div>
-        </div>
-
-        <!-- Dates mode -->
-        <div id="timeDatesBlock" style="display:none;">
-          <div class="grid-2">
-            <label>
-              Start date
-              <input type="date" id="startDate" />
-            </label>
-            <label>
-              End date
-              <input type="date" id="endDate" />
-            </label>
-          </div>
-          <p class="small-hint">
-            We use the dates to estimate how many years the investment lasted.
-          </p>
-        </div>
-
-        <button id="calcRoiBtn">Calculate ROI</button>
-
-        <div id="roiResults" class="results" style="display:none;">
-          <p>
-            ROI:
-            <strong id="roiPercent"></strong>
-          </p>
-          <p>
-            Total gain (amount returned − amount invested):
-            <strong id="roiGain"></strong>
-          </p>
-          <p>
-            Investment time:
-            <strong id="roiYearsText"></strong>
-          </p>
-          <p>
-            Annualized ROI:
-            <strong id="roiAnnual"></strong>
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Explanation card -->
-    <section class="card card-info">
-      <h3 class="info-title">ROI in simple terms</h3>
-
-      <div class="info-grid">
-        <div class="info-block">
-          <h4>What is ROI?</h4>
-          <p>
-            ROI (Return on Investment) shows how much you earned compared to what you spent.
-            It answers the question: “For every €1 I put in, how much did I get back?”
-          </p>
-          <p>
-            For example, if you invest €1,000 and get back €1,200, your gain is €200 and
-            your ROI is 20%.
-          </p>
-        </div>
-
-        <div class="info-block">
-          <h4>Why does time matter?</h4>
-          <p>
-            Earning 20% in one year is very different from earning 20% over ten years.
-            That’s why we also show an <strong>annualized ROI</strong>, which spreads
-            the return over the time period to make comparisons fair.
-          </p>
-        </div>
-
-        <div class="info-block">
-          <h4>What can you use ROI for?</h4>
-          <p>
-            You can apply ROI to almost anything: savings, small projects, ads, or
-            buying and selling assets. It’s a quick way to compare which option
-            uses your money more effectively.
-          </p>
-        </div>
-      </div>
-
-      <h3 class="info-title basics-title">How this calculator works</h3>
-      <div class="info-grid basics-grid">
-        <div class="info-block small">
-          <h4>Amount invested</h4>
-          <p>
-            The total money you put into the investment, including any extra costs
-            you want to count (fees, taxes, etc.).
-          </p>
-        </div>
-
-        <div class="info-block small">
-          <h4>Amount returned</h4>
-          <p>
-            The total money you got back at the end, including any cash you took
-            out along the way if you want to include it.
-          </p>
-        </div>
-
-        <div class="info-block small">
-          <h4>Time length or dates</h4>
-          <p>
-            You can enter how long the investment lasted using years and months,
-            or give start and end dates and we will estimate the time for you.
-          </p>
-        </div>
-
-        <div class="info-block small">
-          <h4>Limits of ROI</h4>
-          <p>
-            ROI is a quick snapshot. It doesn’t show risk, cash flows in the
-            middle, or inflation. Use it as a simple comparison, not a full
-            financial plan.
-          </p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <small>ToolMe · simple, friendly financial tools</small>
-  </footer>
-
-  <script src="script-roi.js"></script>
+<script src="script-roi.js"></script>
 </body>
 </html>
