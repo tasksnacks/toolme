@@ -2,208 +2,303 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Investment Calculator – Grow Your Money Over Time | ToolMe</title>
+  <title>Investment Calculator – ToolMe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta
-    name="description"
-    content="Simple investment calculator to estimate how your savings can grow over time with a fixed return and regular contributions. See end balance, total contributions, and interest."
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* Two-Column Layout for Calculator */
+    .calc-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        align-items: start;
+    }
+
+    /* Input Section */
+    .input-card {
+        background: white;
+        padding: 30px;
+        border-radius: 32px;
+        box-shadow: var(--shadow-soft);
+    }
+
+    .input-group { margin-bottom: 20px; }
+    
+    .input-group label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: var(--text-muted);
+    }
+
+    .custom-input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #f1f5f9;
+        border-radius: 12px;
+        font-family: inherit;
+        font-size: 0.95rem;
+        outline: none;
+        transition: 0.2s;
+        background: #f8fafc;
+        color: var(--text-dark);
+    }
+
+    .custom-input:focus {
+        border-color: var(--primary-dark);
+        background: white;
+    }
+
+    /* Row for shorter inputs */
+    .input-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+
+    /* Result Section */
+    .result-card {
+        background: var(--primary-dark);
+        color: white;
+        padding: 30px;
+        border-radius: 32px;
+        box-shadow: var(--shadow-float);
+        margin-bottom: 24px;
+        text-align: center;
+    }
+
+    .result-card h3 {
+        font-size: 0.9rem;
+        opacity: 0.8;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .big-balance {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: #fff;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 10px;
+        border-top: 1px solid rgba(255,255,255,0.2);
+        padding-top: 20px;
+    }
+
+    .stat-item span { display: block; font-size: 0.75rem; opacity: 0.7; }
+    .stat-item strong { display: block; font-size: 1.1rem; margin-top: 5px; }
+
+    /* Table Styling */
+    .table-card {
+        background: white;
+        border-radius: 24px;
+        padding: 20px;
+        box-shadow: var(--shadow-soft);
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    .modern-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+    }
+
+    .modern-table th {
+        text-align: left;
+        padding: 12px;
+        border-bottom: 2px solid #f1f5f9;
+        color: var(--text-muted);
+        font-weight: 600;
+        position: sticky;
+        top: 0;
+        background: white;
+    }
+
+    .modern-table td {
+        padding: 12px;
+        border-bottom: 1px solid #f1f5f9;
+        color: var(--text-dark);
+    }
+
+    /* Radio Group */
+    .radio-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 8px;
+    }
+    .radio-group label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 400;
+        cursor: pointer;
+    }
+
+    /* SEO Info */
+    .info-section {
+        margin-top: 40px;
+        background: rgba(255,255,255,0.4);
+        border-radius: 24px;
+        padding: 30px;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+
+    @media (max-width: 900px) {
+        .calc-layout { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 
 <body>
-  <!-- Header -->
-  <header class="site-header">
-    <div class="site-header-inner center-header">
-      <a href="index.html" class="logo-link">
-        <div class="logo">ToolMe</div>
-      </a>
+
+<div class="home">
+    <div class="app-shell">
+        
+        <aside class="sidebar">
+            <div class="sidebar-top">
+                <a href="index.html" class="nav-btn primary-btn">←</a>
+                <button class="nav-btn">🌱</button>
+            </div>
+            <div class="sidebar-bottom">
+                <div class="nav-logo">T</div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <header class="top-header">
+                <div class="breadcrumbs">
+                    <a href="index.html" style="color:inherit;">🏠 Home</a> 
+                    <span> / Growth Tools</span>
+                </div>
+                <div class="header-center">Investment Calculator</div>
+                <button class="upgrade-btn">✨ Pro</button>
+            </header>
+
+            <div class="calc-layout">
+                
+                <div class="input-card">
+                    <h2 style="margin-bottom: 20px; font-size:1.2rem;">Configuration</h2>
+                    
+                    <div class="input-group">
+                        <label>Starting Amount ($)</label>
+                        <input type="number" id="invStart" class="custom-input" placeholder="e.g. 10000" />
+                    </div>
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Duration (Years)</label>
+                            <input type="number" id="invYears" class="custom-input" placeholder="10" />
+                        </div>
+                        <div class="input-group">
+                            <label>Return Rate (%)</label>
+                            <input type="number" id="invRate" class="custom-input" placeholder="6.5" />
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Compounding Frequency</label>
+                        <select id="invCompound" class="custom-input">
+                            <option value="annually">Annually</option>
+                            <option value="monthly" selected>Monthly</option>
+                        </select>
+                    </div>
+
+                    <hr style="border:0; border-top:1px solid #f1f5f9; margin: 20px 0;">
+                    
+                    <h3 style="font-size:0.95rem; margin-bottom:15px;">Regular Contributions</h3>
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Amount ($)</label>
+                            <input type="number" id="invContribution" class="custom-input" placeholder="0" />
+                        </div>
+                        <div class="input-group">
+                            <label>Frequency</label>
+                            <select id="invContributionFreq" class="custom-input">
+                                <option value="monthly" selected>Monthly</option>
+                                <option value="yearly">Yearly</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>When to contribute?</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="invTiming" value="end" checked /> End of period</label>
+                            <label><input type="radio" name="invTiming" value="beginning" /> Beginning of period</label>
+                        </div>
+                    </div>
+
+                    <button id="invCalcBtn" class="pill-btn dark" style="width:100%; justify-content:center; margin-top:10px;">Calculate Growth 🚀</button>
+                </div>
+
+                <div class="right-column">
+                    
+                    <div id="invResults" class="result-card" style="display:none;">
+                        <h3>Estimated End Balance</h3>
+                        <div class="big-balance" id="invEndBalance">$0.00</div>
+                        
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <span>Principal</span>
+                                <strong id="invStartOut">$0</strong>
+                            </div>
+                            <div class="stat-item">
+                                <span>Contributions</span>
+                                <strong id="invTotalContrib">$0</strong>
+                            </div>
+                            <div class="stat-item">
+                                <span>Interest</span>
+                                <strong id="invTotalInterest">$0</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+
+[Image of compound interest graph]
+
+                    <div class="table-card">
+                        <h3 style="margin-bottom:15px; font-size:1rem;">Accumulation Schedule</h3>
+                        <table class="modern-table" id="invScheduleTable">
+                            <thead>
+                                <tr>
+                                    <th>Year</th>
+                                    <th>Deposits</th>
+                                    <th>Interest</th>
+                                    <th>Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="info-section">
+                <strong>About this tool:</strong>
+                <p>This calculator assumes a fixed rate of return. In the real world, investments fluctuate. The "Compounding" setting determines how often interest is calculated on your interest (e.g., Monthly is faster than Annually).</p>
+            </div>
+
+        </main>
     </div>
-  </header>
+</div>
 
-  <main class="page">
-    <!-- MAIN INVESTMENT CALCULATOR -->
-    <section class="card">
-      <h1 class="section-title">Investment Calculator</h1>
-      <p class="subtitle">
-        Enter a starting amount, a yearly return, and any regular contributions to see how your money can grow.
-      </p>
-
-      <div class="calculator">
-        <label>
-          Starting amount
-          <input type="number" id="invStart" placeholder="e.g. 20000" />
-        </label>
-
-        <label>
-          Investment length
-          <div class="term-fields">
-            <input type="number" id="invYears" placeholder="10" />
-            <span class="term-unit">years</span>
-          </div>
-        </label>
-
-        <div class="grid-2">
-          <label>
-            Return rate (per year)
-            <input type="number" id="invRate" placeholder="e.g. 6" />
-          </label>
-
-          <label>
-            Compounding
-            <select id="invCompound">
-              <option value="annually">Annually</option>
-              <option value="monthly" selected>Monthly</option>
-            </select>
-          </label>
-        </div>
-
-        <h3 class="mini-title">Regular contributions (optional)</h3>
-
-        <div class="grid-2">
-          <label>
-            Contribution amount
-            <input type="number" id="invContribution" placeholder="e.g. 1000" />
-          </label>
-
-          <label>
-            Contribution frequency
-            <select id="invContributionFreq">
-              <option value="yearly">Every year</option>
-              <option value="monthly" selected>Every month</option>
-            </select>
-          </label>
-        </div>
-
-        <label class="checkbox-row">
-          <input type="radio" name="invTiming" value="end" checked />
-          <span>Contribute at the end of each period</span>
-        </label>
-        <label class="checkbox-row">
-          <input type="radio" name="invTiming" value="beginning" />
-          <span>Contribute at the beginning of each period</span>
-        </label>
-
-        <button id="invCalcBtn">Calculate</button>
-
-        <div id="invResults" class="results" style="display:none;">
-          <p>End balance: <strong id="invEndBalance"></strong></p>
-          <p>Starting amount: <strong id="invStartOut"></strong></p>
-          <p>Total contributions: <strong id="invTotalContrib"></strong></p>
-          <p>Total interest: <strong id="invTotalInterest"></strong></p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ACCUMULATION SCHEDULE -->
-    <section class="card">
-      <h2 class="section-title">Accumulation schedule</h2>
-      <p class="subtitle">
-        This table shows how your balance could grow year by year, based on the information above.
-      </p>
-
-      <div class="schedule-wrapper">
-        <table class="schedule-table" id="invScheduleTable">
-          <thead>
-            <tr>
-              <th>Year</th>
-              <th>Deposit</th>
-              <th>Interest</th>
-              <th>Ending balance</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- rows inserted by JavaScript -->
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- EXPLANATION / SEO CONTENT -->
-    <section class="card card-info">
-      <h3 class="info-title">Investment basics in plain language</h3>
-
-      <div class="info-grid">
-        <div class="info-block">
-          <h4>What are we calculating?</h4>
-          <p>
-            Investing is using money today in order to have more money in the future.
-            This calculator helps you see what your final balance could be if you:
-          </p>
-          <ul>
-            <li>Start with a certain amount</li>
-            <li>Earn a steady yearly return</li>
-            <li>Add more money on a regular schedule</li>
-          </ul>
-        </div>
-
-        <div class="info-block">
-          <h4>Key pieces</h4>
-          <p>
-            <strong>Return rate</strong> is how much your investment grows each year in percent.
-            <strong>Starting amount</strong> is the savings you begin with.
-            <strong>Investment length</strong> is how many years you leave the money invested.
-            <strong>Additional contributions</strong> are extra amounts you add monthly or yearly.
-          </p>
-        </div>
-
-        <div class="info-block">
-          <h4>What can this represent?</h4>
-          <p>
-            You can use this for many simple, long-term plans:
-          </p>
-          <ul>
-            <li>Regular deposits into an index fund</li>
-            <li>Monthly savings for a house deposit</li>
-            <li>Building an emergency fund or retirement pot</li>
-          </ul>
-        </div>
-      </div>
-
-      <h3 class="info-title basics-title">Things to keep in mind</h3>
-
-      <div class="info-grid basics-grid">
-        <div class="info-block small">
-          <h4>Fixed return</h4>
-          <p>
-            We assume a constant return rate. Real investments like stocks or property
-            move up and down over time, so actual results will vary.
-          </p>
-        </div>
-
-        <div class="info-block small">
-          <h4>Compounding</h4>
-          <p>
-            Compounding means interest is earned on top of previous interest.
-            The more often it compounds (for example monthly instead of yearly),
-            the faster the balance can grow.
-          </p>
-        </div>
-
-        <div class="info-block small">
-          <h4>Risk</h4>
-          <p>
-            Higher potential returns usually mean higher risk. This tool does
-            not show risk – it only shows what could happen if the return rate
-            stayed steady.
-          </p>
-        </div>
-
-        <div class="info-block small">
-          <h4>Fees & taxes</h4>
-          <p>
-            Management fees and taxes can reduce real returns. You can roughly
-            include them by using a slightly lower return rate in the calculator.
-          </p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <small>ToolMe · simple, friendly financial tools</small>
-  </footer>
-
-  <script src="script-investment.js"></script>
+<script src="script-investment.js"></script>
 </body>
 </html>
