@@ -2,101 +2,186 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>ToolMe – Simple Tools for Everyday Tasks</title>
+    <title>ToolMe – Free Online Financial & Productivity Tools</title>
+    <meta name="description" content="Free online calculators for loans, ROI, and investments, plus productivity tools like day counters and text case converters. Simple, fast, and mobile-friendly.">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- Importing the clean font -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css" />
+    
+    <style>
+        /* Specific tweaks for this dashboard layout */
+        .hero-section {
+            max-width: 800px;
+            margin-bottom: 40px;
+        }
+        
+        /* Grid adjustments to fit 5 items nicely */
+        .home-tools-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Default to 3 columns */
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        /* SEO Footer Styles */
+        .seo-footer {
+            margin-top: auto; /* Push to bottom */
+            padding-top: 40px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            color: #94a3b8; /* Light gray */
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .seo-footer h3 {
+            font-size: 1rem;
+            color: #64748b; /* Slightly darker gray for headers */
+            margin-bottom: 12px;
+            margin-top: 24px;
+        }
+        
+        .seo-footer h3:first-child {
+            margin-top: 0;
+        }
+
+        .seo-footer p {
+            margin-bottom: 15px;
+        }
+
+        /* Responsive Grid Logic */
+        @media (max-width: 1100px) {
+            .home-tools-grid {
+                grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+            }
+        }
+
+        @media (max-width: 600px) {
+            .home-tools-grid {
+                grid-template-columns: 1fr; /* 1 column on mobile */
+            }
+        }
+    </style>
 </head>
 
 <body>
 
     <div class="home">
+        <!-- The Main Glass Container -->
         <div class="app-shell">
             
+            <!-- Left Sidebar -->
             <aside class="sidebar">
                 <div class="sidebar-top">
-                    <button class="nav-btn primary-btn">+</button>
-                    <button class="nav-btn">🏠</button>
-                    <button class="nav-btn">🛠️</button>
-                    <button class="nav-btn">⚙️</button>
+                    <!-- Navigation Icons -->
+                    <button class="nav-btn primary-btn" title="Add New">+</button>
+                    <button class="nav-btn" onclick="window.location.href='index.html'" title="Home">🏠</button>
+                    <button class="nav-btn" title="Tools">🛠️</button>
+                    <button class="nav-btn" title="Settings">⚙️</button>
                 </div>
                 <div class="sidebar-bottom">
+                    <!-- Brand Logo -->
                     <div class="nav-logo">T</div>
                 </div>
             </aside>
 
+            <!-- Main Content Area -->
             <main class="main-content">
                 
+                <!-- Header -->
                 <header class="top-header">
                     <div class="breadcrumbs">
                         <span>🚀 ToolMe v1.0</span>
                     </div>
-                    <div class="header-center">Daily ToolMe</div>
-                    <button class="upgrade-btn">✨ Upgrade</button>
+                    <div class="header-center">Daily Dashboard</div>
+                    <button class="upgrade-btn">✨ Pro</button>
                 </header>
 
+                <!-- Hero Section (Clean, Text Only) -->
                 <section class="hero-section">
                     <div class="hero-text">
-                        <h1>Ready to make your<br>numbers feel easy?</h1>
-                        <p class="hero-subtext">ToolMe gives you clear, friendly calculators for everyday money and time questions.</p>
-                    </div>
-                    <div class="hero-illustration">
-                        <div class="robot-bubble">Instant answers! ⚡️</div>
-                        <img src="https://cdn3d.iconscout.com/3d/premium/thumb/calculator-4034873-3337965.png" alt="3D Calculator" class="robot-img">
+                        <h1>Smart Tools for<br>Everyday Tasks.</h1>
+                        <p class="hero-subtext">
+                            No complex spreadsheets. No sign-ups. Just simple, friendly calculators and utilities to help you get answers fast.
+                        </p>
                     </div>
                 </section>
 
+                <!-- All 5 Tools Grid -->
                 <div class="home-tools-grid">
+                    
+                    <!-- 1. Loan Calculator -->
                     <a href="loan-calculator.html" class="home-tool-card">
                         <div class="card-icon">💸</div>
                         <div class="card-content">
                             <h2>Loan Calculator</h2>
-                            <p>See payments, total cost, and interest for any loan.</p>
+                            <p>Estimate monthly payments, total interest, and amortization schedules.</p>
                         </div>
                         <span class="card-footer">Finance</span>
                     </a>
                     
+                    <!-- 2. ROI Calculator -->
                     <a href="roi-calculator.html" class="home-tool-card">
                         <div class="card-icon">📈</div>
                         <div class="card-content">
                             <h2>ROI Calculator</h2>
-                            <p>Compare how much you really earn from different investments.</p>
+                            <p>Calculate Return on Investment with annualized percentage yields.</p>
                         </div>
                         <span class="card-footer">Business</span>
                     </a>
 
+                    <!-- 3. Investment Planner -->
                     <a href="investment-calculator.html" class="home-tool-card">
                         <div class="card-icon">🌱</div>
                         <div class="card-content">
                             <h2>Investment Planner</h2>
-                            <p>See how your savings can grow with regular contributions.</p>
+                            <p>Forecast compound interest growth with regular monthly contributions.</p>
                         </div>
                         <span class="card-footer">Growth</span>
                     </a>
-                </div>
 
-                <div class="interaction-area">
-                    <div class="interaction-header">
-                        <span>✨ Unlock more with ToolMe Pro</span>
-                        <span>🤖 Smart Calculations</span>
-                    </div>
-                    
-                    <div class="big-input-wrapper">
-                        <span>+</span>
-                        <input type="text" placeholder='Example: "Calculate my monthly loan payment"'>
-                        <div class="input-actions">
-                            <button class="mic-btn">🎙️</button>
-                            <button class="send-btn">➤</button>
+                    <!-- 4. Day Counter -->
+                    <a href="day-counter.html" class="home-tool-card">
+                        <div class="card-icon">📅</div>
+                        <div class="card-content">
+                            <h2>Day Counter</h2>
+                            <p>Count days between dates or calculate future dates (business days support).</p>
                         </div>
-                    </div>
+                        <span class="card-footer">Productivity</span>
+                    </a>
 
-                    <div class="action-buttons-row">
-                        <a href="day-counter.html" class="pill-btn dark">📅 Day Counter</a>
-                        <a href="case-converter.html" class="pill-btn dark">Aa Case Converter</a>
-                        <button class="pill-btn dark">🔍 Search</button>
-                        <button class="pill-btn circle">...</button>
-                    </div>
+                    <!-- 5. Case Converter -->
+                    <a href="case-converter.html" class="home-tool-card">
+                        <div class="card-icon">Aa</div>
+                        <div class="card-content">
+                            <h2>Case Converter</h2>
+                            <p>Instantly convert text to Uppercase, Lowercase, Title Case, and more.</p>
+                        </div>
+                        <span class="card-footer">Text Tools</span>
+                    </a>
+
                 </div>
+
+                <!-- SEO / About Section at the bottom -->
+                <footer class="seo-footer">
+                    <h3>About ToolMe</h3>
+                    <p>
+                        ToolMe is your free, privacy-focused suite of online utilities. Whether you are managing finances, planning a project, or formatting text, our tools work instantly in your browser without requiring software downloads or account registrations.
+                    </p>
+                    
+                    <h3>Our Tools</h3>
+                    <p>
+                        <strong>Financial Calculators:</strong> Use our <em>Loan Calculator</em> to plan mortgages and auto loans, or the <em>ROI Calculator</em> to evaluate business profitability. The <em>Investment Planner</em> helps visualize long-term wealth generation through compound interest.
+                    </p>
+                    <p>
+                        <strong>Productivity Utilities:</strong> Our <em>Day Counter</em> is perfect for project management and planning deadlines, allowing you to exclude weekends. The <em>Case Converter</em> helps writers and developers format text headers and titles in seconds.
+                    </p>
+                    
+                    <small style="opacity: 0.6; display: block; margin-top: 30px;">
+                        © 2025 ToolMe. All calculations are for estimation purposes only.
+                    </small>
+                </footer>
 
             </main>
         </div>
