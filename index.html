@@ -1,124 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>ToolMe – Simple Tools for Everyday Tasks</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <title>ToolMe – Simple Tools for Everyday Tasks</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-  <!-- Header with logo -->
-  <header class="site-header">
-    <div class="site-header-inner center-header">
-      <a href="index.html" class="logo-link">
-        <div class="logo">ToolMe</div>
-      </a>
-    </div>
-  </header>
 
-  <main class="home">
-    <!-- Glass main container -->
-    <div class="glass-app">
-      <div class="home-layout">
-        <!-- RIGHT MAIN CONTENT -->
-        <section class="home-main">
-          <!-- Top bar with “upgrade” pill -->
-          <div class="home-main-header">
-            <span class="home-main-label">Daily ToolMe</span>
-            <button class="upgrade-pill">
-              <span>Upgrade</span>
-            </button>
-          </div>
-
-          <!-- HERO ROW -->
-          <div class="home-hero-row">
-            <div class="home-hero-text">
-              <h1>Ready to make your<br />numbers feel easy?</h1>
-              <p>
-                ToolMe gives you clear, friendly calculators for everyday
-                money and time questions. Pick a tool and get an instant answer.
-              </p>
-            </div>
-
+    <div class="home">
+        <div class="app-shell">
             
-          </div>
-
-          <!-- MAIN FEATURE CARDS (3) -->
-          <div class="home-tools-grid">
-            <a href="loan-calculator.html" class="home-tool-card">
-              <div class="home-tool-tag">Loans</div>
-              <h2>Loan Calculator</h2>
-              <p>See payments, total cost, and interest for any loan.</p>
-              <span class="home-tool-link">Open tool →</span>
-            </a>
-
-            <a href="roi-calculator.html" class="home-tool-card">
-              <div class="home-tool-tag">ROI</div>
-              <h2>ROI Calculator</h2>
-              <p>Compare how much you really earn from different investments.</p>
-              <span class="home-tool-link">Open tool →</span>
-            </a>
-
-            <a href="investment-calculator.html" class="home-tool-card">
-              <div class="home-tool-tag">Growth</div>
-              <h2>Investment Planner</h2>
-              <p>See how your savings can grow with regular contributions.</p>
-              <span class="home-tool-link">Open tool →</span>
-            </a>
-          </div>
-
-          <!-- SECOND ROW FOR OTHER TOOLS -->
-          <div class="home-tools-grid secondary">
-            <a href="day-counter.html" class="home-tool-card small">
-              <div class="home-tool-tag">Dates</div>
-              <h2>Day Counter</h2>
-              <p>Count days between dates or add days to a date.</p>
-              <span class="home-tool-link">Open tool →</span>
-            </a>
-
-            <a href="case-converter.html" class="home-tool-card small">
-              <div class="home-tool-tag">Text</div>
-              <h2>Case Converter</h2>
-              <p>Switch text to upper, lower, title, or sentence case.</p>
-              <span class="home-tool-link">Open tool →</span>
-            </a>
-          </div>
-
-          <!-- BOTTOM INTERACTION BAR -->
-          <div class="home-bottom">
-            <div class="home-bottom-header">
-              <span class="home-bottom-title">Unlock more with ToolMe</span>
-              <span class="home-bottom-sub">More smart tools coming soon.</span>
-            </div>
-
-            <div class="home-bottom-input">
-              <div class="home-bottom-input-inner">
-                <span class="input-placeholder">
-                  Example: “Calculate my monthly loan payment”
-                </span>
-                <div class="input-icons">
-                  <span class="input-icon">🎙</span>
-                  <span class="input-icon">➤</span>
+            <aside class="sidebar">
+                <div class="sidebar-top">
+                    <button class="nav-btn primary-btn">+</button>
+                    <button class="nav-btn">🏠</button>
+                    <button class="nav-btn">🛠️</button>
+                    <button class="nav-btn">⚙️</button>
                 </div>
-              </div>
-            </div>
+                <div class="sidebar-bottom">
+                    <div class="nav-logo">T</div>
+                </div>
+            </aside>
 
-            <div class="home-bottom-actions">
-              <a href="loan-calculator.html" class="bottom-chip primary">Loan tool</a>
-              <a href="roi-calculator.html" class="bottom-chip primary">ROI tool</a>
-              <a href="investment-calculator.html" class="bottom-chip">Invest</a>
-              <a href="day-counter.html" class="bottom-chip">Days</a>
-              <a href="case-converter.html" class="bottom-chip">Text</a>
-            </div>
-          </div>
-        </section>
-      </div>
+            <main class="main-content">
+                
+                <header class="top-header">
+                    <div class="breadcrumbs">
+                        <span>🚀 ToolMe v1.0</span>
+                    </div>
+                    <div class="header-center">Daily ToolMe</div>
+                    <button class="upgrade-btn">✨ Upgrade</button>
+                </header>
+
+                <section class="hero-section">
+                    <div class="hero-text">
+                        <h1>Ready to make your<br>numbers feel easy?</h1>
+                        <p class="hero-subtext">ToolMe gives you clear, friendly calculators for everyday money and time questions.</p>
+                    </div>
+                    <div class="hero-illustration">
+                        <div class="robot-bubble">Instant answers! ⚡️</div>
+                        <img src="https://cdn3d.iconscout.com/3d/premium/thumb/calculator-4034873-3337965.png" alt="3D Calculator" class="robot-img">
+                    </div>
+                </section>
+
+                <div class="home-tools-grid">
+                    <a href="loan-calculator.html" class="home-tool-card">
+                        <div class="card-icon">💸</div>
+                        <div class="card-content">
+                            <h2>Loan Calculator</h2>
+                            <p>See payments, total cost, and interest for any loan.</p>
+                        </div>
+                        <span class="card-footer">Finance</span>
+                    </a>
+                    
+                    <a href="roi-calculator.html" class="home-tool-card">
+                        <div class="card-icon">📈</div>
+                        <div class="card-content">
+                            <h2>ROI Calculator</h2>
+                            <p>Compare how much you really earn from different investments.</p>
+                        </div>
+                        <span class="card-footer">Business</span>
+                    </a>
+
+                    <a href="investment-calculator.html" class="home-tool-card">
+                        <div class="card-icon">🌱</div>
+                        <div class="card-content">
+                            <h2>Investment Planner</h2>
+                            <p>See how your savings can grow with regular contributions.</p>
+                        </div>
+                        <span class="card-footer">Growth</span>
+                    </a>
+                </div>
+
+                <div class="interaction-area">
+                    <div class="interaction-header">
+                        <span>✨ Unlock more with ToolMe Pro</span>
+                        <span>🤖 Smart Calculations</span>
+                    </div>
+                    
+                    <div class="big-input-wrapper">
+                        <span>+</span>
+                        <input type="text" placeholder='Example: "Calculate my monthly loan payment"'>
+                        <div class="input-actions">
+                            <button class="mic-btn">🎙️</button>
+                            <button class="send-btn">➤</button>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons-row">
+                        <a href="day-counter.html" class="pill-btn dark">📅 Day Counter</a>
+                        <a href="case-converter.html" class="pill-btn dark">Aa Case Converter</a>
+                        <button class="pill-btn dark">🔍 Search</button>
+                        <button class="pill-btn circle">...</button>
+                    </div>
+                </div>
+
+            </main>
+        </div>
     </div>
-  </main>
 
-  <footer class="site-footer">
-    <small>ToolMe · simple, friendly tools for everyday tasks</small>
-  </footer>
 </body>
 </html>
